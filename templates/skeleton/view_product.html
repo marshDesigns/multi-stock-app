@@ -1,0 +1,66 @@
+{% extends 'body/base.html' %}  
+{% block title %}Orders{% endblock  %}
+{% block content %}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800" style='margin-top:20px;'>My Cart</h1>
+    </div>
+    <div class="card shadow mb-4" style='margin-top:30px;'>
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Available Products</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead class='bg-info'>
+                        <tr class="text-white">
+                    
+                            <th scope="col">Product</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Pack Size</th>
+                            <th scope='col'>Price</th>
+                            <th scope="col">Supplier</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ product.title }}</td>
+                            <td>{{ product.category }}</td>
+                            <td>{{ product.pack_size }}</td>
+                            <td>{{ product.price }}</td>
+                            <td>{{product.vendor}}</td>
+                            
+                        </tr>
+                     
+                    </tbody>
+                </table>
+            </div>   
+        </div>
+        <hr >
+        <div>
+
+        </div>
+    </div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="notification is-success is-toast">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+   <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Quantity</label>
+            <div class="control">
+                <input type="number" name="quantity" value="1" class="form-group" min="1" id="">
+            </div>
+
+            <div class="control">
+                <input class="btn btn-success is-dark" type='submit' value='Add to Cart' />
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock  %}

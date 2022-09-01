@@ -1,0 +1,85 @@
+{% extends "body/base.html" %}
+{% block title %}Details{% endblock  %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<!--Table-->
+<div class="container-fluid"> 
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800" style='margin-top:20px;'>Orders</h1>
+    </div>   
+        <div class="row my-4">
+            <div class="col-md"> 
+                    <div class="row">
+                        <div class="col-md-8">
+                            <table class="table bg-white table-borderless">
+                                <tbody>
+                                    
+                                    <tr>
+                                        <th scope="row">Order Id</th>
+                                        <td>{{ order_detail.id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Status</th>
+                                        <td>{{ ord_obj.order_status }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Date Ordered</th>
+                                        <td>{{ord_obj.created_at}}({{ord_obj.created_at|timesince}} ago)</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Customer Name</th>
+                                        <td>{{ ord_obj.ordered_by }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Customer Number</th>
+                                        <td>{{ ord_obj.mobile }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Status</th>
+                                        <td>{{ ord_obj.order_status }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Payment Method</th>
+                                        <td>{{ ord_obj.payment_method }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr>
+                            <table class="table bg-white table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <td>{{ order_detail.product.title }}</td>
+                                        <th></th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in order.items.all  %}
+                                    {% if item.vendor == request.user.vendor %}
+                                    <tr>
+                                        <td>{{ order_detail.product.title }}</td>
+                                        <td>${{ item.product.price }}</td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td>{{ item.vendor_paid|yesno:"Yes,No" }}</td>
+                                        <td>${{ item.get_total_price }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                
+            </div>
+        </div>
+</div>
+
+<!--End Table-->
+
+
+{% endblock  %}

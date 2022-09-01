@@ -1,0 +1,22 @@
+{% extends "body/base.html" %}
+{% block title %}Submit Order{% endblock  %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div class="container-fluid">
+     <!-- Page Heading -->
+     <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800" style='margin-top:20px;'>Product Added to cart succesfully</h1>
+    </div>
+    <div class='row my-4'>
+        <div class='col-md'>
+            <div style="padding-top:25px;"></div>
+            <a href='{% url 'my_cart' %}' class='btn btn-danger'>View Cart</a>
+            <div class="row my-4">
+        </div>
+    </div>
+</div>
+
+
+{% endblock  %}

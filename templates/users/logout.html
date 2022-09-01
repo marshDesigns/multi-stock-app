@@ -1,0 +1,22 @@
+{% extends 'body/base.html' %}
+{% block title %}Logout{% endblock  %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class='container'>
+    <div class='row mt-5'>
+        <div class='col-md-6 offset-md-3'>
+            <div class='border bg-white p-3'>
+                <h3>Logout</h3>
+                <hr>
+                <div class='alert alert-danger'>
+                    <h4>Logout Successful</h4>
+                </div>
+                <a href='{% url 'login' %}'>Login<a/>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

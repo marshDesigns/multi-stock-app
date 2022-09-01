@@ -1,0 +1,57 @@
+{% extends 'body/base.html' %}  
+{% block title %}Orders{% endblock  %}
+
+
+{% block content %}
+
+{% include 'body/navbar.html' %}
+
+<!--Table-->
+<div class="container">
+    <div class="row my-4">
+        
+        <div class="col-md-8">
+            <table class="table bg-white">
+                <thead class="bg-info">
+                    <tr class="text-white">
+                        <th scope="col">#</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total Amount</th>
+                      
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order_item in object.items.all %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ order_item.item.title }}</td>
+                        <td>{{ order_item.item.category }}</td>
+                        <td>{{ order_item.item.price }}</td>
+                        <td>{{ order_item.quantity }}</td>
+                        <td>$ {{ order_item.get_total_order_price }}</td>        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tr>
+                    <td colspan='5'> Total Order Amount</td>
+                    <td colspan='5'><b>$ {{ object.get_total }}</b></td>
+                </tr>
+                <tr>
+                    <td colspan='5'></td>
+                    <td>
+                        <a class='btn btn-danger float-right ml-2' href="#">Checkout</a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
+<!--End Table-->
+
+
+{% endblock  %}

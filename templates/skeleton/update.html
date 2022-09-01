@@ -1,0 +1,26 @@
+{% extends 'body/base.html' %}
+{% block title %}Update {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class='container'>
+    <div class='row mt-5'>
+        <div class='col-md-6 offset-md-3'>
+            <div class='border bg-white p-3'>
+                <h4>Update Stock</h4>
+                <hr>
+                <form method='POST'>
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <input class='btn btn-success' type='submit' value='Update' />
+                    <a class='btn btn-primary' href="{% url 'products' %}">Cancel</a>
+                </form>
+            </div>
+          
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

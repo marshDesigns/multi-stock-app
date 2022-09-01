@@ -1,0 +1,60 @@
+{% extends "body/base.html" %} {% block title %}Details{% endblock %} {% load
+crispy_forms_tags %} {% block content %}
+
+<!--Table-->
+<div class="container-fluid">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800" style="margin-top: 20px">Checkout</h1>
+  </div>
+  <div class="card shadow mb-4" style="margin-top: 30px">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Checkout Products</h6>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table
+            class="table table-bordered"
+            id="dataTable"
+            width="100%"
+            cellspacing="0"
+          >
+            <thead class="bg-info">
+              <tr class="text-white">
+                <th>SN</th>
+                <th>Product</th>
+                <th>Pack Size</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in cart %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{item.title}}</td>
+                <td>{{item.pack_size}}</td>
+                <td>{{item.quantity}}</td>
+                <td>$ {{item.total_price}}</td>
+              </tr>
+              {% endfor %}
+              <tr>
+                <th colspan="4">Total</th>
+                <th>$ {{cart.get_total_cost}}</th>
+              </tr>
+            </tbody>
+          </table>
+          <hr />
+          <div>
+            <form method="POST">
+              {% csrf_token %} {{ form.as_p }}
+              <button class="btn btn-info">Place order</button>
+            </form>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<!--End Table-->
+
+{% endblock %}

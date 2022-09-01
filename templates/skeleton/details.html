@@ -1,0 +1,68 @@
+{% extends "body/base.html" %}
+{% block title %}Details{% endblock  %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<!--Table-->
+<div class="container">
+    <div class="row my-4">
+        
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                   Order Details
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <table class="table bg-white table-borderless">
+                                <tbody>
+                                    
+                                    <tr>
+                                        <th scope="row">Product</th>
+                                        <td>{{ stock_order.product }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Ordered By</th>
+                                        <td>{{ stock_order.order_by }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Quantity Ordered</th>
+                                        <td>{{ stock_order.order_quantity }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Price</th>
+                                        <td>{{ stock_order.price }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Total Amount</th>
+                                        <td>{{ stock_order.total_amount }}</td>
+                                    </tr>
+                                    <!--<tr>
+                                        <th scope="row">Ordered Date</th>
+                                        <td>{{ stock_order.order_date }}</td>
+                                    </tr>-->
+                                </tbody>
+                            </table>
+                            <hr>
+                            <form method='POST'>
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                <input class='btn btn-success' type='submit' value='Approve' />
+                                <a class='btn btn-primary' href="{% url 'delete_order' stock_order.id %}">Delete</a>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!--End Table-->
+
+
+{% endblock  %}

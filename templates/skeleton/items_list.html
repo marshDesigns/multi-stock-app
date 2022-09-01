@@ -1,0 +1,47 @@
+{% extends 'body/base.html' %}  
+{% block title %}Make Order{% endblock  %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+{% include 'body/navbar.html' %}
+
+  <!--Table-->
+  <div class="container">
+    <div style="padding-top:25px;"></div>
+    <a href='{% url 'my_cart' %}' class='btn btn-danger'>View Cart</a>
+    <div class="row my-4">
+      
+        <div class="col-md-8">
+            <table class="table bg-white">
+                <thead class="bg-info">
+                    <tr class="text-white">
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p  in product_list  %}
+                        <td>{{forloop.counter}}</td>
+                        <td>{{ p.title }}</td>
+                        <td>{{ p.category }}</td>
+                        <td>{{ p.price }}</td>
+                        <td>
+                            <a class="btn btn-info btn-sm" href="{% url 'add_to_cart' p.id %} ">Order</a>
+                            
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!--End Table-->
+
+{% endblock %}

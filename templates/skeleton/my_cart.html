@@ -1,0 +1,87 @@
+{% extends "body/base.html" %}
+{% block title %}Submit Order{% endblock  %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class='container-fluid'>
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800" style='margin-top:20px;'>My Cart</h1>
+    </div>
+    <div class="card shadow mb-4" style='margin-top:30px;'>
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Cart Products</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead class='bg-info'>
+                        <tr class="text-white">
+                                <th>SN</th>
+                                <th>Supplier</th>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Quantity</th> 
+                                <th>Action</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        {% if cart %}
+                        {% for item in cart %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{item.product.vendor}}</td>
+                                <td>{{item.product.title}}</td>
+                                <td>{{item.product.category}}</td>
+                                <td>${{ item.total_price }}</td>
+                                <td>{{item.quantity}}</td>
+                                <td class='row'>
+                                    <a href="?change_quantity={{ item.id }}&quantity=-1" style='color:green;'><i class="fas fa-minus fa-fw"></i></a>
+                                    <div style='width:15px;'></div>
+                                    <a href="?change_quantity={{ item.id }}&quantity=1" style='color:blue;'><i class="fas fa-plus fa-fw"></i></a>
+                                    <div style='width:15px;'></div>
+                                    <a href="?remove_from_cart={{item.id}}" style='color:red;' class="delete"><i class="fas fa-trash fa-fw"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                   
+                </table>
+            </div>
+
+            <div class='row'>
+                <strong>Total Items</strong>
+                <span style='margin-left:15px;'></span>
+                <strong>{{ cart|length }}</strong>
+            </div>
+            <div class='row'>
+                <strong>Total Cost</strong>
+                <span style='margin-left:15px;'></span>
+                <td colspan="2">${{cart.get_total_cost}}</td>
+            </div>
+
+            <hr />   
+        </div>
+    </div>
+    <h2 class="subtitle">Contact Information</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div>
+            <div class="col-md-5">
+                {{ form|crispy }}
+            </div> 
+            <div>
+                <div class="col-md-3">
+                    <button class="btn btn-success">Checkout</button>
+                </div>
+            </div>
+            <div style='padding:20px;'></div>
+        </div>
+    </form>
+    {% else %}
+    <p>No items in cart</p>
+    {% endif %}
+</div>
+
+{% endblock  %}

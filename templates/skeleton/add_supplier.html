@@ -1,0 +1,36 @@
+{% extends 'body/base.html' %}  
+{% block title %} Add Suppliers{% endblock  %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800" style='margin-top:20px;'>Add Suppliers</h1>
+    </div>
+    <div class='row my-4'>
+        <div class='col-md'>
+            {% for message in messages  %}
+                {% if message %}
+                <div class='alert alert-{{ message.tags }}'>
+                    {{ message }}
+                </div>
+                {% endif %}
+            {% endfor %}
+            <form method="POST">
+                {% csrf_token %}
+                <div class='col-sm col-md-6'>
+                    {{ form|crispy }}
+                </div>
+                <div class='col-6 col-md-4 float-center'>
+                    <input class="btn btn-success btn-block" type="submit" value="Add User">
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,189 @@
+{% extends 'body/base.html' %} 
+{% block title %}Home{% endblock %} 
+{% load crispy_forms_tags %} 
+{% block content %}
+
+<div class="container-fluid">
+  {% if user.is_staff %}
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800" style="margin-top: 20px">
+      Notifications
+    </h1>
+  </div>
+  <div class="row">
+    {% if user.is_superuser %}
+    <!-- Total Customers -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div
+                class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+              >
+                Total Customers
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{total_customers}}
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-users fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div></div>
+    {% endif %}
+
+    <!-- Total Products -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-warning shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div
+                class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+              >
+                Total Products
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ total_products }}
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-list-alt fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Orders -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-danger shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div
+                class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+              >
+                Total Orders
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ total_orders }}
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-box fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Total Orders -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div
+                class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+              >
+              Total  Messages
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ total_messages }}
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-envelope fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800" style="margin-top: 20px">
+      Broadcast Message
+    </h1>
+  </div>
+  {% for message in messages %} {% if message %}
+  <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+  {% endif %} {% endfor %}
+    <form method="POST">
+      {% csrf_token %}
+      <div class="col-6 col-md-6" style="float: left">
+        {{ form.message|as_crispy_field }}
+      </div>
+      <div class="col-3 col-md-3" style="float: left">
+        {{ form.broadcast_on|as_crispy_field }}
+      </div>
+      <div class="col-3 col-md-3">
+        <input class="btn btn-success btn-block" type="submit" />
+      </div>
+    </form>
+  {% else %}
+  <div class="card shadow mb-4" style="margin-top: 30px">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Available Products</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table
+          class="table table-bordered"
+          id="dataTable"
+          width="100%"
+          cellspacing="0"
+        >
+          <thead class="bg-info">
+            <tr class="text-white">
+              <th>#</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Pack Size</th>
+              <th>Price</th>
+              <th>Supplier</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for product in product %}
+            <tr>
+              <td>{{forloop.counter}}</td>
+              <td>{{ product.title }}</td>
+              <td>{{ product.category }}</td>
+              <td>{{ product.pack_size}}</td>
+              <td>$ {{ product.price }}</td>
+              <td>{{ product.vendor.first_name }}</td>
+              {% if user.is_authenticated %}
+              <td>
+                <a
+                  class="btn btn-success btn-sm"
+                  href="{% url 'view-product' product.slug %} "
+                  >Order</a
+                >
+              </td>
+              {% else %}
+              <td>
+                <a class="btn btn-success btn-sm" href="{% url 'login' %} "
+                  >Order</a
+                >
+              </td>
+              {% endif %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+
+{% endblock %}

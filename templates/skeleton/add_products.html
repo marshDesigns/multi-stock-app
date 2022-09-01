@@ -1,0 +1,54 @@
+{% extends 'body/base.html' %}  
+{% block title %} Add Products{% endblock  %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800" style='margin-top:20px;'>Add Products</h1>
+    </div>
+    <div class='row my-4'>
+        <div class='col-md'>
+            {% for message in messages  %}
+                {% if message %}
+                <div class='alert alert-{{ message.tags }}'>
+                    {{ message }}
+                </div>
+                {% endif %}
+            {% endfor %}
+            <form method="POST">
+                {% csrf_token %}
+                <div class='col-6 col-md-6 float-left'>
+                    {{ form.title|as_crispy_field }}
+                </div>
+                <div class='col-6 col-md-6 float-right'>
+                    {{ form.category|as_crispy_field }}
+                </div>
+                <div class='col-6 col-md-6 float-left'>
+                    {{ form.pack_size|as_crispy_field }}
+                </div>
+                <div class='col-6 col-md-6 float-right'>
+                    {{ form.price|as_crispy_field }}
+                </div>
+                <div class='col-6 col-md-6 float-left'>
+                    {{ form.quantity|as_crispy_field }}
+                </div>
+                <div class='col-6 col-md-6 float-left'>
+                    {{ form.expiry_date|as_crispy_field }}
+                </div>
+                <div class='col-6 col-md-8 float-left'>
+                    {{ form.description|as_crispy_field }}
+                </div>
+                <div class='col-6 col-md-4 float-center'>
+                    <input class="btn btn-success btn-block" type="submit" value="Add Product">
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
