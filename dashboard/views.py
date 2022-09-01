@@ -86,11 +86,11 @@ def index(request):
         form = BroadcastForm()
         send = MessageForm()
 
-    users = Vendor.objects.all()
+    suppliers = Vendor.objects.all()
     sent_msgs = Message.objects.all()
     orders = Order.objects.all()
 
-    total_customers = users.count()
+    total_customers = suppliers.count()
     total_messages = sent_msgs.count()
     total_products = product.count()
     total_orders = orders.count()
