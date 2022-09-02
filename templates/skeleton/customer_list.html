@@ -18,8 +18,7 @@
                         <tr class="text-white">
                             <th scope="col">#</th>
                             <th scope="col">Username</th>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Surname</th>
+                            <th scope="col">Supplier Name</th>
                             <th scope="col">Email</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -30,7 +29,6 @@
                             <td>{{forloop.counter}}</td>
                             <td>{{ p.username }}</td>
                             <td>{{ p.first_name }}</td>
-                            <td>{{ p.last_name }}</td>
                             <td>{{ p.email }}</td>
                             <td>
                                 <a class="btn btn-info btn-sm" href="{% url 'update-user' p.id %}">Edit</a>

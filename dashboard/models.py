@@ -21,7 +21,6 @@ class Vendor(User):
     image = models.ImageField(upload_to='uploads/',blank=True, null= True)
     thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
 
-
     def get_balance(self):
         items = self.items.filter(vendor_paid=False, order__vendors__in=[self.id])
         return sum((item.product.price * item.quantity) for item in items)

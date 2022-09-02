@@ -20,7 +20,7 @@
       <div class='row'>
         {% for product in vendor.products.all %}
         <div class='col-md-4'>
-          <div class='box_man' style='width:100%;border:1px solid gray;padding:25px;border-radius:5px;height:550'>
+          <div class='box_man' style='width:100%;border:1px solid gray;padding:25px;border-radius:5px;height:550;margin-bottom:20px;'>
             <h3 class='mobile_text' style='font-size:30px;color:gray;text-align:center;font-wight;bold;text-transform:uppercase;'>{{ product.category }}</h3>
             {% if product.image %}
             <div class="computer_img" style='width:100%;text-align:center;height:300px;'><img src="{{ product.image.url }}" alt="{{ product.title }}" style='height:300px;width:100%;object-fit:cover' class='responsive'></div>

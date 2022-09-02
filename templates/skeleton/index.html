@@ -136,11 +136,11 @@
       <div>
         <div class='row'>
           {% for vendor in vendors %}
-          <div class='col-md-4'>
+          <div class='col-md-4' style='margin-bottom: 20px;'>
             <div class='box_man' style='width:100%;border:1px solid gray;padding:25px;border-radius:5px;'>
               <h3 class='mobile_text' style='font-size:30px;color:gray;text-align:center;font-wight;bold;text-transform:uppercase;'>{{ vendor.first_name }}</h3>
-              {% if vendor.image %}
-              <div class="computer_img" style='width:100%;text-align:center;height:300px;'><img src="{{ vendor.image.url }}" alt="{{ vendor.username }}" style='height:300px;width:100%;object-fit:cover' class='responsive'></div>
+              {% if v.image %}
+              <div class="computer_img" style='width:100%;text-align:center;height:300px;'><img src="" alt="" style='height:300px;width:100%;object-fit:cover' class='responsive'></div>
               {% endif %}
               <h4 class="computer_text" style='width:100%;font-size:24px;color:gray;text-align:center;font-weight:bold;'>{{ vendor.flast_name }}</h4>
              <div class="cart_bt_1" style='width:110px;margin:0 auto;margin-top:10px;'><a href="{% url 'sup-products' vendor.id%}" style='width:100px; font-size:14px;color:white;background-color:#355764;text-align;cenetr;padding:8px 6px;' class='btn '>View Products</a></div>
