@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 #from autoslug import AutoSlugField
+from PIL import Image
+from django.core.files import File
+from io import BytesIO
 
 
 # Create your models here.
@@ -35,15 +38,42 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
     added_date = models.DateTimeField(auto_now_add=True)
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=255,null=True, blank=True)
-    packet_size = models.PositiveIntegerField(default=1,null=True,blank=True)
+    pack_size = models.CharField(max_length=255,null=True,blank=True)
     quantity = models.PositiveIntegerField(default=1)
     expiry_date = models.DateField(blank=True,null=True)
-    pack_size = models.PositiveIntegerField(default=1)
+    image = models.ImageField(upload_to='uploads/',blank=True)
+
     class Meta:
         ordering = ['-added_date']
 
     def __str__(self):
         return self.title
+    
+    def get_thumbnail(self):
+        if self.thumbnail:
+            return self.thumbnail.url
+        else:
+            if self.image:
+                self.thumbnail = self.make_thumbnail(self.image)
+                self.save()
+                return self.thumbnail.url
+            
+            else:
+                # Default Image
+                return 'https://via.placeholder.com/240x180.jpg'
+    
+    # Generating Thumbnail - Thumbnail is created when get_thumbnail is called
+    def make_thumbnail(self, image, size=(300, 200)):
+        img = Image.open(image)
+        img.convert('RGB')
+        img.thumbnail(size)
+
+        thumb_io = BytesIO()
+        img.save(thumb_io, 'JPEG', quality=85)
+
+        thumbnail = File(thumb_io, name=image.name)
+
+        return thumbnail
     
        
 #Orders Model 

@@ -133,52 +133,30 @@
       <h6 class="m-0 font-weight-bold text-primary">Available Products</h6>
     </div>
     <div class="card-body">
-      <div class="table-responsive">
-        <table
-          class="table table-bordered"
-          id="dataTable"
-          width="100%"
-          cellspacing="0"
-        >
-          <thead class="bg-info">
-            <tr class="text-white">
-              <th>#</th>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Pack Size</th>
-              <th>Price</th>
-              <th>Supplier</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for product in product %}
-            <tr>
-              <td>{{forloop.counter}}</td>
-              <td>{{ product.title }}</td>
-              <td>{{ product.category }}</td>
-              <td>{{ product.pack_size}}</td>
-              <td>$ {{ product.price }}</td>
-              <td>{{ product.vendor.first_name }}</td>
-              {% if user.is_authenticated %}
-              <td>
-                <a
-                  class="btn btn-success btn-sm"
-                  href="{% url 'view-product' product.slug %} "
-                  >Order</a
-                >
-              </td>
-              {% else %}
-              <td>
-                <a class="btn btn-success btn-sm" href="{% url 'login' %} "
-                  >Order</a
-                >
-              </td>
+      <div>
+        <div class='row'>
+          {% for product in product %}
+          <div class='col-md-4'>
+            <div class='box_man' style='width:100%;border:1px solid gray;padding:25px;border-radius:5px;'>
+              <h3 class='mobile_text' style='font-size:30px;color:gray;text-align:center;font-wight;bold;text-transform:uppercase;'>{{ product.category }}</h3>
+              {% if product.image %}
+              <div class="computer_img" style='width:100%;text-align:center;height:300px;'><img src="{{ product.image.url }}" alt="{{ product.title }}" style='height:300px;width:100%;object-fit:cover' class='responsive'></div>
               {% endif %}
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+              <h4 class="computer_text" style='width:100%;font-size:24px;color:gray;text-align:center;font-weight:bold;'>{{ product.vendor.first_name }}</h4>
+              <div class="computer_text_main" style='width:60%;display:flex;justify-content:space-between;margin:0 auto;text-align:center;align-items:center;'>
+                <h4 class="dell_text" style='font-size:20px;color:blue;font-weight:bold;width:100%;'>{{ product.title }}</h4>
+                <h6 class="price_text" style='font-size:16px;color:#ff5d68;font-weight:bold;width:100%;'>${{ product.price }}</h6>
+                <h6 class="price_text_1"style='font-size:14px;color:#636262;font-weight:bold;width:100%;'>{{ product.pack_size }}</h6>
+             </div>
+             {% if user.is_authenticated %}
+             <div class="cart_bt_1" style='width:110px;margin:0 auto;margin-top:10px;'><a href="{% url 'view-product' product.slug %}" style='width:100px; font-size:14px;color:white;background-color:#ff5d68;text-align;cenetr;padding:8px 6px;' class='btn'>Add To Cart</a></div>
+             {%else %}
+             <div class="cart_bt_1" style='width:110px;margin:0 auto;margin-top:10px;'><a href="{% url 'login'%}" style='width:100px; font-size:14px;color:white;background-color:#ff2268;text-align;cenetr;padding:8px 6px;' class='btn '>Add To Cart</a></div>
+             {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
       </div>
     </div>
   </div>

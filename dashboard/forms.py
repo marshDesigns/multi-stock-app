@@ -22,6 +22,7 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields =[
+            'image',
             'title',
             'category',
             'pack_size',

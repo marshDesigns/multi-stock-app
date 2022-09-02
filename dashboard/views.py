@@ -145,7 +145,7 @@ def replyMessages(request, key):
 @login_required(login_url='login')
 def addProducts(request):
     if request.method == 'POST':
-        form = ProductForm(request.POST)
+        form = ProductForm(request.POST, request.FILES)
         
         if form.is_valid():
             product = form.save(commit=True)
@@ -258,28 +258,26 @@ def cart_details(request):
         form = CheckoutForm(request.POST)
         if form.is_valid():
         
-            try:
+           # try:
         
-                amount=int(cart.get_total_cost() * 100), # Amount in Cents
-
-                first_name = form.cleaned_data['first_name']
-                last_name = form.cleaned_data['last_name']
-                email = form.cleaned_data['email']
-                phone = form.cleaned_data['phone']
-                address = form.cleaned_data['address']
+            amount=int(cart.get_total_cost() * 100), # Amount in Cents
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+            phone = form.cleaned_data['phone']
+            address = form.cleaned_data['address']
               
-                order = checkout(request, first_name, last_name, email, phone, address, cart.get_total_cost())
-
-                cart.clear()
+            order = checkout(request, first_name, last_name, email, phone, address, cart.get_total_cost())
+            
+            cart.clear()
 
                 # SEnd Email Notification
-                notify_customer(order)
-                notify_vendor(order)
-
-                return redirect('cart:success')
+            #notify_customer(order)
+            #notify_vendor(order)
+            return redirect('success')
             
-            except Exception:
-                messages.error(request, "Something went wrong with payment.")
+           # except Exception:
+               # messages.error(request, "Something went wrong with payment.")
             
     else:
         form = CheckoutForm()
@@ -298,8 +296,7 @@ def cart_details(request):
     
     context ={
         'form':form
-    }
-        
+    }   
     return render(request, 'skeleton/my_cart.html', context)
 
 def success(request):
