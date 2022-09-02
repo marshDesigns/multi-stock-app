@@ -34,10 +34,10 @@ class Vendor(User):
 #Products model
 class Product(models.Model):
     vendor = models.ForeignKey(Vendor, related_name="products", on_delete=models.CASCADE,null=True,blank=True)
-    title = models.CharField(max_length=50,null=True, blank=True)
+    title = models.CharField(max_length=255,null=True, blank=True)
     slug = models.SlugField(max_length=55)
     description = models.TextField(blank=True, null=True)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+    price = models.DecimalField(max_digits=50, decimal_places=2)
     added_date = models.DateTimeField(auto_now_add=True)
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=255,null=True, blank=True)
     pack_size = models.CharField(max_length=255,null=True,blank=True)
@@ -95,16 +95,16 @@ METHOD = (
 
 
 class Order(models.Model):
-    first_name =models.CharField(max_length=200,null=True,blank=True)
-    last_name = models.CharField(max_length=100,blank=True, null=True) 
-    email = models.EmailField(null=True, blank=True)
-    address = models.CharField(max_length=200,null=True,blank=True)
-    phone = models.CharField(max_length=25,blank=True, null=True)
-    paid_amount = models.DecimalField(null=True,blank=True,max_digits=10,decimal_places=2)
+    first_name =models.CharField(max_length=255,null=True,blank=True)
+    last_name = models.CharField(max_length=255,blank=True, null=True) 
+    email = models.EmailField(max_length=255,null=True, blank=True)
+    address = models.CharField(max_length=255,null=True,blank=True)
+    phone = models.CharField(max_length=255,blank=True, null=True)
+    paid_amount = models.DecimalField(null=True,blank=True,max_digits=50,decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True, null=True,blank=True)
     vendors = models.ManyToManyField(Vendor, related_name="orders", null=True, blank=True)
     payment_method = models.CharField(
-        max_length=20, choices=METHOD, default="Cash On Delivery")
+        max_length=200, choices=METHOD, default="Cash On Delivery")
     class Meta:
         ordering = ['-created_at']
 
@@ -116,7 +116,7 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Product, related_name="items", on_delete=models.CASCADE,null=True,blank=True)
     vendor = models.ForeignKey(Vendor, related_name="items", on_delete=models.CASCADE)
     vendor_paid = models.BooleanField(default=False)
-    price = models.DecimalField(max_digits=8, decimal_places=2)
+    price = models.DecimalField(max_digits=50, decimal_places=2)
     quantity = models.IntegerField(default=1)
 
     def __str__(self):
