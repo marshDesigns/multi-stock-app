@@ -277,7 +277,7 @@ def cart_details(request):
             phone = form.cleaned_data['phone']
             address = form.cleaned_data['address']
               
-            order = checkout(request, first_name, last_name, email, address, phone, cart.get_total_cost())
+            order = checkout(request, first_name, last_name, email, phone, address, cart.get_total_cost())
             
             cart.clear()
 
