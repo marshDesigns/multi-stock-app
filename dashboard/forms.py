@@ -10,6 +10,7 @@ class SupplierForm(UserCreationForm):
     class Meta:
         model = Vendor
         fields =[
+            'image',
             'username',
             'first_name',
             'last_name',

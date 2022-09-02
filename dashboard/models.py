@@ -18,6 +18,8 @@ CATEGORY_CHOICES = (
 class Vendor(User):
     
     created_at = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='uploads/',blank=True, null= True)
+    thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
 
 
     def get_balance(self):
@@ -41,7 +43,8 @@ class Product(models.Model):
     pack_size = models.CharField(max_length=255,null=True,blank=True)
     quantity = models.PositiveIntegerField(default=1)
     expiry_date = models.DateField(blank=True,null=True)
-    image = models.ImageField(upload_to='uploads/',blank=True)
+    image = models.ImageField(upload_to='uploads/',blank=True, null=True)
+    thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
 
     class Meta:
         ordering = ['-added_date']

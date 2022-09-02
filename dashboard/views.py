@@ -66,10 +66,19 @@ def viewProduct(request, product_slug):
         'form': form,
     }
     return render(request, 'skeleton/view_product.html', context)
+
+def viewVendorProducts(request, key):
+    vendor = get_object_or_404(Vendor, pk=key)
     
+    context= {
+        'vendor': vendor,
+    }
+    return render(request, 'skeleton/supplier_products.html', context)
     
 # home page for both staff and customers defined by user permissions
 def index(request): 
+    
+    vendors = Vendor.objects.all()
     product = Product.objects.all()
     if request.method == 'POST':
         form = BroadcastForm(request.POST)
@@ -96,6 +105,7 @@ def index(request):
     total_orders = orders.count()
 
     context = {
+        'vendors': vendors,
         'product': product,
         'total_customers': total_customers,
         'room_name': "broadcast",

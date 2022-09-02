@@ -12,6 +12,7 @@ urlpatterns = [
     path('login_success', views.login_success, name='login_success'),##check
     path('account/', views.supplier_Inventory, name= 'account'),##check
     path('products/', views.products , name= 'products'),##check
+    path('sup-products/<int:key>/',views.viewVendorProducts, name='sup-products'),
     path('add_products/', views.addProducts , name= 'add_products'),##check
     path('messages/', views.viewMessages , name= 'messages'),##check
     path('reply_msg/<int:key>/', views.replyMessages , name= 'reply_msg'),##check
