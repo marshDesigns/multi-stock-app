@@ -6,6 +6,7 @@ from django.core.files import File
 from io import BytesIO
 
 
+
 # Create your models here.
 
 CATEGORY_CHOICES = (
@@ -28,6 +29,13 @@ class Vendor(User):
     def get_paid_amount(self):
         items = self.items.filter(vendor_paid=True, order__vendors__in=[self.id])
         return sum((item.product.price * item.quantity) for item in items)
+    
+class Customer(User):
+    
+    date_added = models.DateField(auto_now_add=True,null=True,blank=True)
+    
+    def __str__(self):
+        return self.date_added
 
 #admin and customer models
 #Products model
@@ -94,6 +102,7 @@ METHOD = (
 
 
 class Order(models.Model):
+    customers= models.ManyToManyField(Customer, related_name='orders',null=True,blank=True)
     first_name =models.CharField(max_length=255,null=True,blank=True)
     last_name = models.CharField(max_length=255,blank=True, null=True) 
     email = models.EmailField(max_length=255,null=True, blank=True)
@@ -104,6 +113,7 @@ class Order(models.Model):
     vendors = models.ManyToManyField(Vendor, related_name="orders", null=True, blank=True)
     payment_method = models.CharField(
         max_length=200, choices=METHOD, default="Cash On Delivery")
+    order_status = models.CharField(max_length=50, choices=ORDER_STATUS, null=True,blank=True, default='Order Received')
     class Meta:
         ordering = ['-created_at']
 

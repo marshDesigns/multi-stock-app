@@ -1,3 +1,4 @@
+from urllib import request
 from dashboard.cart import Cart
 from asgiref.sync import async_to_sync
 import json
@@ -306,36 +307,55 @@ def success(request):
     return render(request, 'skeleton/success.html')
 
 
-@login_required(login_url='login')
-def adminDash(request):
-    vendor = request.user.vendor
-    orders = vendor.orders.all()
-    context = {
-        'orders': orders,
-        'vendor':vendor,
-    }
-    return render(request, 'skeleton/admin_dash.html', context)
+class AdminOrders(TemplateView):
+    template_name= 'skeleton/admin_dash.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        vendor = self.request.user.vendor
+        context["orders"] = vendor.orders.all()
+        return context
+
+
+class CustomerOrders(TemplateView):
+    template_name= 'skeleton/customer_order_list.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        customer= self.request.user.customer
+        context["orders"] = customer.orders.all()
+        return context
+
+
 # view order details
 
-def supplierOrderDetails(request, key):
-    vendor = request.user.vendor
-    orders = vendor.orders.get(id=key)
+class SupplierOrderDetails(DetailView):
+    template_name= 'skeleton/supplier_order_detail.html'
+    model = Order
+    context_object_name = 'details'
     
-    context = {
-        'orders': orders,
-        'vendor':vendor,
-        
-    }
-    return render(request, 'skeleton/supplier_order_detail.html', context)
-
-def orderDetail(request, pk):
-    order_detail = Order.objects.get(id=pk)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["status"] = ORDER_STATUS
+        return context
     
-    context ={
-        'order_detail':order_detail,
-    }
-    return render(request,"skeleton/order_detail.html", context)
-   
+class CustomerOrderDetails(DetailView):
+    template_name= 'skeleton/customer_order_detail.html'
+    model = Order
+    context_object_name = 'details'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["status"] = ORDER_STATUS
+        return context
+class ChangeStatusView(View):
+    def post(self, request, *args, **kwargs):
+        order_id = self.kwargs['pk']
+        order_obj = Order.objects.get(id=order_id)
+        new_status = request.POST.get('status')
+        order_obj.order_status = new_status
+        order_obj.save()
+        return redirect(reverse_lazy('s_order_detail',kwargs={'pk': order_id}))
 
 # update stock
 @login_required(login_url='login')
@@ -398,17 +418,6 @@ def test(request):
         }
     )
     return HttpResponse("Done")
-
-
-class ChangeStatusView(View):
-    def post(self, request, *args, **kwargs):
-        order_id = self.kwargs["pk"]
-        order_obj = Order.objects.get(id=order_id)
-        new_status = request.POST.get("status")
-        order_obj.order_status = new_status
-        order_obj.save()
-        return redirect(reverse_lazy("order_detail", kwargs={"pk": order_id}))
-
 
 # customer order summary
 class ProductDetailView(DetailView):

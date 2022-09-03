@@ -62,7 +62,7 @@
                         </thead>
                         <tbody>
                             {% for item in details.items.all %}
-                            {% if item.vendor == request.user.vendor %}
+                            {% if item.customer == request.user.customer %}
                                 <td>{{ item.product.title }}</td>
                                 <td>{{ item.product.price }}</td>
                                 <td>{{ item.quantity }}</td>
@@ -71,15 +71,6 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                    <form action="{% url 'change_status' details.id %}" method='POST'>
-                        {% csrf_token %}
-                        <select name='status'>
-                            {% for i, j in status  %}
-                            <option value="{{i}}" {% if i == details.order_status %}selected{% endif %}>{{j}}</option>
-                            {% endfor %}
-                        </select>
-                        <button class='btn btn-success'>Update</button>
-                    </form>
             </div>
         </div>    
     </div>

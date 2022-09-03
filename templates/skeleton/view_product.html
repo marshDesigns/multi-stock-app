@@ -21,6 +21,7 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead class='bg-info'>
                         <tr class="text-white">
+                            <th scope="col">#</th>
                     
                             <th scope="col">Product</th>
                             <th scope="col">Category</th>
@@ -31,6 +32,7 @@
                     </thead>
                     <tbody>
                         <tr>
+                            <td>{{forloop.counter}}</td>
                             <td>{{ product.title }}</td>
                             <td>{{ product.category }}</td>
                             <td>{{ product.pack_size }}</td>
