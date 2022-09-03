@@ -43,23 +43,16 @@ def viewProduct(request, product_slug):
     # Check whether the AddToCart button is clicked or not
     if request.method == 'POST':
         form = AddToCartForm(request.POST)
-
         if form.is_valid():
             quantity = form.cleaned_data['quantity']
-            cart.add(product_id=product.id, quantity=quantity, update_quantity=False)
+            cart.add(product_id=product.id, quantity=quantity, update_quantity=True)
 
             messages.success(request, "The product was added to the cart.")
-
             return redirect('view-product',  product_slug=product_slug)            
     
     else:
         form = AddToCartForm()
 
-    
-
-    # If more than 4 similar products, then get 4 random products 
-    
-    
     context = {
         'product': product,
         
@@ -327,12 +320,11 @@ def adminDash(request):
 def supplierOrderDetails(request, key):
     vendor = request.user.vendor
     orders = vendor.orders.get(id=key)
-    order1 = vendor.orders.all()
-  
+    
     context = {
         'orders': orders,
         'vendor':vendor,
-        'order1':order1,
+        
     }
     return render(request, 'skeleton/supplier_order_detail.html', context)
 
