@@ -19,10 +19,9 @@
                     <thead class='bg-info'>
                         <tr class="text-white">
                             <th scope="col">#</th>
-                            <th scope="col">Ordered Number</th>
-                            <th scope="col">Ordered By</th>
+                            <th scope="col">Order Number</th>
+                            <th scope="col">Customer</th>
                             <th scope="col">Date Ordered</th>
-                        
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -30,8 +29,8 @@
                     <tr>
                         <td>{{forloop.counter}}</td>
                        <!--<td><a href=" 'order_detail' order.id ">#ORDER_{{order.id}}</a></td>-->
-                        <td><a href="#">#ORDER_{{order.id}}</a></td>
-                        <td>{{ order.first_name }} {{ order.last_name }}</td>
+                        <td><a href="{% url 's_order_detail' order.id %}">#ORDER_{{order.id}}</a></td>
+                        <td>{{order.first_name }} {{order.last_name}}</td>
                         <td>{{order.created_at|timesince }}</td>
                         <td>
                             <a class="btn btn-danger btn-sm" href="{% url 'delete-order' order.id %}">Delete</a>
@@ -41,37 +40,6 @@
                 </table>
             </div>
             <div class='table-responsive'>
-                {% for item in order.items.all %}
-                    {% if item.vendor == request.user.vendor %}
-                    <table class="table bg-white table-borderless">
-                        <tbody>
-                            
-                            <tr>
-                                <th scope="row">Product Name</th>
-                                <td>{{ item.product.title}}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Price</th>
-                                <td>{{ item.product.price }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Quantity</th>
-                                <td>{{ item.quantity }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Product Paid</th>
-                                <td>{{ item.vendor_paid|yesno:'Yes,No' }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Total</th>
-                                <td>{{ item.get_total_price }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <hr />
-                    {% endif %}
-                {% endfor %}
-            </div>
         </div>    
     </div>
     {% endfor %}

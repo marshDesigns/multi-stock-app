@@ -1,0 +1,57 @@
+{% extends 'body/base.html' %}  
+{% block title %}Orders{% endblock  %}
+{% block content %}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800" style='margin-top:20px;'>Order Details</h1>
+    </div>
+    
+    <div class="card shadow mb-4" style='margin-top:30px;'>
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">#{{ orders.id }} - {{ orders.first_name }}</h6>
+        </div>
+        <div class="card-body">
+            <div class='table-responsive'>
+                    <table class="table bg-white table-borderless">
+                        <tbody>
+                            
+                            <tr>
+                                <th scope="row">Ordered By</th>
+                                <td>{{ orders.first_name}} {{orders.last_name }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Date Ordered</th>
+                                <td>{{ orders.created_at }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Email</th>
+                                <td>{{ orders.email }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Phone Number</th>
+                                <td>{{ orders.phone }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Delivery Address</th>
+                                <td>{{ orders.address }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Payment Method</th>
+                                <td>{{ orders.payment_method }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Total Amount</th>
+                                <td>$ {{ orders.paid_amount }}</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                    <hr />
+            </div>
+        </div>    
+    </div>
+</div>
+
+{% endblock  %}

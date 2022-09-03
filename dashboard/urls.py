@@ -13,6 +13,7 @@ urlpatterns = [
     path('account/', views.supplier_Inventory, name= 'account'),##check
     path('products/', views.products , name= 'products'),##check
     path('sup-products/<int:key>/',views.viewVendorProducts, name='sup-products'),
+    path('s_order_detail/<int:key>/',views.supplierOrderDetails, name='s_order_detail'),
     path('add_products/', views.addProducts , name= 'add_products'),##check
     path('messages/', views.viewMessages , name= 'messages'),##check
     path('reply_msg/<int:key>/', views.replyMessages , name= 'reply_msg'),##check

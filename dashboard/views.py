@@ -317,25 +317,24 @@ def success(request):
 def adminDash(request):
     vendor = request.user.vendor
     orders = vendor.orders.all()
-    for order in orders:
-        order.vendor_amount = 0
-        order.vendor_paid_amount = 0
-        order.fully_paid = True
-
-        for item in order.items.all():
-            if item.vendor == request.user.vendor:
-                if item.vendor_paid:
-                    order.vendor_paid_amount += item.get_total_price()
-                else:
-                    order.vendor_amount += item.get_total_price()
-                    order.fully_paid = False
     context = {
         'orders': orders,
-        'vendor':vendor
+        'vendor':vendor,
     }
     return render(request, 'skeleton/admin_dash.html', context)
 # view order details
 
+def supplierOrderDetails(request, key):
+    vendor = request.user.vendor
+    orders = vendor.orders.get(id=key)
+    order1 = vendor.orders.all()
+  
+    context = {
+        'orders': orders,
+        'vendor':vendor,
+        'order1':order1,
+    }
+    return render(request, 'skeleton/supplier_order_detail.html', context)
 
 def orderDetail(request, pk):
     order_detail = Order.objects.get(id=pk)
