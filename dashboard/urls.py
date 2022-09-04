@@ -13,7 +13,7 @@ from .views import (
 
 
 urlpatterns = [
-    path('', views.index, name='index'),##check
+    path('index/', views.index, name='index'),##check
     path('login_success', views.login_success, name='login_success'),##check
     path('account/', views.supplier_Inventory, name= 'account'),##check
     path('products/', views.products , name= 'products'),##check

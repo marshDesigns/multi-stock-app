@@ -9,8 +9,12 @@
     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
         <i class="fa fa-bars"></i>
     </button>
+    {% if user.is_authenticated %}
     <a class="navbar-brand text-white" href="{% url 'index' %}">Stocks</a>
-
+    {% else %}
+    <a class="navbar-brand text-white" href="{% url 'login' %}">Stocks</a>
+    {% endif %}
+    
     <!-- Topbar Search -->
     <form
         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
@@ -83,7 +87,14 @@
             </div>
         </li>
         {% if request.user.vendor %}
-        <div></div>
+        <!-- Nav Item - User Information -->
+        <!-- Nav Item - User Information -->
+        <li class="nav-item  no-arrow">
+            <a class="nav-link text-white" href="{% url 'logout' %}"  role="button" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-white small">Logout</span>
+            </a>
+        </li>
+        
         {% else %}
         <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle text-white" href="#" id="alertsDropdown" role="button"
@@ -110,11 +121,18 @@
                 </a>
             </div>
         </li>
+        <div class="topbar-divider d-none d-sm-block"></div>
         {% endif %}
         <!-- Modal -->
-        <div class="topbar-divider d-none d-sm-block"></div>
 
-        {% if user.is_authenticated %}
+        {% if request.user.customer %}
+        <li class="nav-item no-arrow">
+            <a class="nav-link text-white" href="{% url 'customer-orders' %}" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-list-alt fa-fw"></i>
+                <!-- Counter - Alerts -->
+                <span class="badge badge-danger badge-counter" id='notification-badge'></span>
+            </a>
+        </li>
         <!-- Nav Item - User Information -->
         <li class="nav-item no-arrow">
             <a class="nav-link text-white" href="{% url 'my_cart' %}" role="button" aria-haspopup="true" aria-expanded="false">
@@ -123,6 +141,9 @@
                 <span class="badge badge-danger badge-counter" id='notification-badge'>{% if cart %}{{cart|length}}{% endif %}</span>
             </a>
         </li>
+
+        <div class="topbar-divider d-none d-sm-block"></div>
+        
         <!-- Nav Item - User Information -->
         <li class="nav-item  no-arrow">
             <a class="nav-link text-white" href="{% url 'logout' %}"  role="button" aria-haspopup="true" aria-expanded="false">
@@ -130,11 +151,20 @@
             </a>
         </li>
         {% else %}
+        <div></div>
+        {% endif %}
+
+        {% if user.is_staff %}
+        <!-- Nav Item - User Information -->
+        
+        <!-- Nav Item - User Information -->
         <li class="nav-item  no-arrow">
-            <a class="nav-link text-white" href="{% url 'login' %}"  role="button" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-white small">Login</span>
+            <a class="nav-link text-white" href="{% url 'logout' %}"  role="button" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-white small">Logout</span>
             </a>
         </li>
+        {% else %}
+        <div></div>
         {% endif %}
    
     </ul>

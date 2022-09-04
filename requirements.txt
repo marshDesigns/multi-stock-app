@@ -24,6 +24,7 @@ Django==4.0.7
 django-celery-beat==2.3.0
 django-celery-results==2.4.0
 django-crispy-forms==1.14.0
+django-filter==22.1
 django-heroku==0.3.1
 django-timezone-field==5.0
 gunicorn==20.1.0
@@ -50,6 +51,8 @@ redis==4.3.4
 service-identity==21.1.0
 six==1.16.0
 sqlparse==0.4.2
+Twisted==22.4.0
+twisted-iocpsupport==1.0.2
 txaio==22.2.1
 typing_extensions==4.3.0
 tzdata==2022.2

@@ -315,20 +315,15 @@ class AdminOrders(TemplateView):
         vendor = self.request.user.vendor
         context["orders"] = vendor.orders.all()
         return context
-
-
 class CustomerOrders(TemplateView):
     template_name= 'skeleton/customer_order_list.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        customer= self.request.user.customer
-        context["orders"] = customer.orders.all()
+        context["orders"] = Order.objects.all()
         return context
 
-
 # view order details
-
 class SupplierOrderDetails(DetailView):
     template_name= 'skeleton/supplier_order_detail.html'
     model = Order
