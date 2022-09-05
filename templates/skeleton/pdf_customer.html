@@ -13,12 +13,12 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Ordered By</th>
-                            <th>Date Ordered</th>
-                            <th>Email</th>
-                            <th>Number</th>
-                            <th>Payment Method</th>
-                            <th>Order Status</th>
+                            <th scope="col">Ordered By</th>
+                            <th scope="col">Date Ordered</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Number</th>
+                            <th scope="col">Payment Method</th>
+                            <th scope="col">Order Status</th>
                     
                             <!-- <th>Quantity</th> -->
                         </tr>
@@ -34,26 +34,6 @@
                         </tr>
                     </tbody>
                 </table> 
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead class='thead-dark'>
-                        <tr class="text-white">
-                            <th scope="col">Product</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Total Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in orders.items.all %}
-                        {% if item.vendor == request.user.vendor %}
-                            <td>{{ item.product.title }}</td>
-                            <td>{{ item.product.price }}</td>
-                            <td>{{ item.quantity }}</td>
-                            <td>{{ item.get_total_price }}</td>
-                        {% endif %}
-                        {% endfor %}
-                    </tbody>
-                </table>  
             </div>
         </div> 
 
