@@ -100,6 +100,9 @@ def index(request):
     
     v_products = vendors.product.all()
     v_orders = vendors.orders.all()
+    
+    v_p_count = v_products.count()
+    v_o_count = v_orders.count()
 
     context = {
         'vendors': vendors,
@@ -111,8 +114,8 @@ def index(request):
         'send': send,
         'total_products':total_products,
         'total_orders': total_orders,
-        'v_products':v_products,
-        'v_orders':v_orders,
+        'v_p_count':v_products,
+        'v_o_count':v_orders,
     }
     return render(request, 'skeleton/index.html', context)
 
