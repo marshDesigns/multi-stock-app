@@ -98,8 +98,9 @@ def index(request):
     total_products = product.count()
     total_orders = orders.count()
     
-    v_products = vendors.products.all()
-    v_orders = vendors.orders.all()
+    vendor = request.user.vendor
+    v_products = vendor.products.all()
+    v_orders = vendor.orders.all()
     
     v_p_count = v_products.count()
     v_o_count = v_orders.count()
