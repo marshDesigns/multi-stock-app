@@ -114,8 +114,8 @@ def index(request):
         'send': send,
         'total_products':total_products,
         'total_orders': total_orders,
-        'v_p_count':v_products,
-        'v_o_count':v_orders,
+        'v_p_count':v_p_count,
+        'v_o_count':v_o_count,
     }
     return render(request, 'skeleton/index.html', context)
 
