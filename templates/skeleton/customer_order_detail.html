@@ -11,7 +11,7 @@
     <div class="card shadow mb-4" style='margin-top:30px;'>
         <div class="card-header py-3">
             <div class='row'>
-                <a class='btn btn-warning'>Print Pdf</a>
+                <a class='btn btn-warning' href='{% url 'pdf_customer' %}'>Print Pdf</a>
             </div>
         </div>
         <div class="card-body">
@@ -55,22 +55,26 @@
                     <hr />
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead class='bg-info'>
-                            <tr class="text-white">
-                                <th scope="col">Product</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Total Price</th>
+                            <tr class="text-white row" style='justify-content:space-evenly'>
+                                <th scope='col'>Supplier</th>
+                                <th scope='col'>Product</th>
+                                <th scope='col'>Price</th>
+                                <th scope='col'>Quantity</th>
+                                <th scope='col'>Total Price</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for item in details.items.all %}
-                            {% if item.customers == request.user.customers %}
-                                <td>{{ item.product.title }}</td>
-                                <td>{{ item.product.price }}</td>
-                                <td>{{ item.quantity }}</td>
-                                <td>{{ item.get_total_price }}</td>
+                            {% if item.chero == request.user.chero %}
+                            <tr class='row' style='justify-content:space-evenly'>
+                                <td scope='col'>{{ item.vendor.first_name }}</td>
+                                <td scope='col'>{{ item.product.title }}</td>
+                                <td scope='col'>{{ item.product.price }}</td>
+                                <td scope='col'>{{ item.quantity }}</td>
+                                <td scope='col'>{{ item.get_total_price }}</td>
                             {% endif %}
                             {% endfor %}
+                            <tr>
                         </tbody>
                     </table>
             </div>

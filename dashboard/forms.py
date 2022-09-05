@@ -1,5 +1,5 @@
 from django import forms
-from .models import Order, Product, Message, Vendor
+from .models import Order, Product, Message, Vendor, Customer
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -18,6 +18,26 @@ class SupplierForm(UserCreationForm):
             'password2',
             #'is_staff',
         ]
+        
+        
+class CreateUserForm(UserCreationForm):
+    email = forms.EmailField()
+    
+    class Meta:
+        model = Customer
+        fields = [
+            'username',
+            'id_number',
+            'email',
+            'first_name',
+            'last_name',
+            'password1',
+            'password2',
+            'is_superuser',
+            'is_staff',
+        ]
+        
+
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product

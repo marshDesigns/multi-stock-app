@@ -1,3 +1,4 @@
+from re import template
 from urllib import request
 from dashboard.cart import Cart
 from asgiref.sync import async_to_sync
@@ -15,10 +16,15 @@ from django.contrib import messages
 from django.views.generic import DetailView, View,  TemplateView
 from django.urls import reverse_lazy
 from notifications_app.forms import BroadcastForm
-from users.forms import CreateUserForm
+from .forms import CreateUserForm
 from django.conf import settings
 from django.core.mail import send_mail
 from django.utils.text import slugify
+
+from django.template.loader import get_template
+from .pdf import render_to_pdf
+from datetime import datetime
+
 
 # Create your views here.
 
@@ -33,6 +39,60 @@ def login_success(request):
         return render('index')
     else:
         return redirect('index')
+
+
+class GeneratePdf(View):   
+    def get(self, request,*args, **kwargs):
+        template = get_template('skeleton/pdf.html')
+        vendor = request.user.vendor
+        orders = vendor.orders.all()
+        my_date = datetime.now()
+        formatted_date = my_date.strftime("%Y-%m-%d %H:%M:%S")
+        
+        context= {
+            'orders':orders,
+            'my_date':formatted_date,
+        }
+        
+        html = template.render(context)
+        pdf = render_to_pdf('skeleton/pdf.html', context)
+        if pdf:
+            response =  HttpResponse(pdf, content_type='application/pdf')
+            filename = "Invoice_%s.pdf" %("124567772")
+            content = "inline; filename='%s'"%(filename)
+            download = request.GET.get('download')
+            if download:
+                content ="attachment; filename='%s'"%(filename)  
+            response['Content-Disposition'] = content        
+            return response
+        return HttpResponse('Error')
+        
+        
+class GeneratePdfCustomer(View):   
+    def get(self, request,*args, **kwargs):
+        template = get_template('skeleton/pdf.html')
+        customer = request.user.customer
+        orders = customer.orders.all()
+        my_date = datetime.now()
+        formatted_date = my_date.strftime("%Y-%m-%d %H:%M:%S")
+        
+        context= {
+            'orders':orders,
+            'my_date':formatted_date,
+        }
+        
+        html = template.render(context)
+        pdf = render_to_pdf('skeleton/pdf_customer.html', context)
+        if pdf:
+            response =  HttpResponse(pdf, content_type='application/pdf')
+            filename = "Invoice_%s.pdf" %("124567772")
+            content = "inline; filename='%s'"%(filename)
+            download = request.GET.get('download')
+            if download:
+                content ="attachment; filename='%s'"%(filename)  
+            response['Content-Disposition'] = content        
+            return response
+        return HttpResponse('Error')
     
     
 def viewProduct(request, product_slug):
@@ -98,12 +158,7 @@ def index(request):
     total_products = product.count()
     total_orders = orders.count()
     
-    vendor = request.user.vendor
-    v_products = vendor.products.all()
-    v_orders = vendor.orders.all()
-    
-    v_p_count = v_products.count()
-    v_o_count = v_orders.count()
+
 
     context = {
         'vendors': vendors,
@@ -115,8 +170,7 @@ def index(request):
         'send': send,
         'total_products':total_products,
         'total_orders': total_orders,
-        'v_p_count':v_p_count,
-        'v_o_count':v_o_count,
+      
     }
     return render(request, 'skeleton/index.html', context)
 
@@ -329,7 +383,7 @@ class CustomerOrders(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["orders"] = Order.objects.all()
+        context["orders"] =Order.objects.filter(email = self.request.user.email)
         return context
 
 # view order details
@@ -352,6 +406,7 @@ class CustomerOrderDetails(DetailView):
         context = super().get_context_data(**kwargs)
         context["status"] = ORDER_STATUS
         return context
+    
 class ChangeStatusView(View):
     def post(self, request, *args, **kwargs):
         order_id = self.kwargs['pk']
@@ -437,3 +492,33 @@ class ProductDetailView(DetailView):
         product.save()
         context['product'] = product
         return context
+
+
+
+
+
+def register(request):
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else :
+        form = CreateUserForm()
+        
+    context = {
+        'form': form,
+    }
+    return render(request, 'users/register.html', context)
+
+
+def login(request):
+    if request.user.is_authenticated:
+        return redirect('index')
+    
+    return render(request, 'users/login.html')
+
+
+def logout(request):
+    return render(request, 'users/logout.html')
+

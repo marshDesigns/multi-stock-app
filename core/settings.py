@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dashboard.apps.DashboardConfig',
-    'users.apps.UsersConfig',
     'crispy_forms',
     'channels',
     'django_celery_beat',

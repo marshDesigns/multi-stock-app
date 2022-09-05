@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from PIL import Image
 from django.core.files import File
 from io import BytesIO
+from django.conf import settings
 
 
 
@@ -32,10 +33,8 @@ class Vendor(User):
     
 class Customer(User):
     
-    date_added = models.DateField(auto_now_add=True,null=True,blank=True)
+    id_number = models.CharField(null=True,blank=True,unique=True,max_length=255)
     
-    def __str__(self):
-        return self.date_added
 
 #admin and customer models
 #Products model
@@ -102,7 +101,7 @@ METHOD = (
 
 
 class Order(models.Model):
-    customers= models.ManyToManyField(Customer, related_name='orders',null=True,blank=True)
+    customer = models.ManyToManyField(Customer, related_name="orders", null=True, blank=True)
     first_name =models.CharField(max_length=255,null=True,blank=True)
     last_name = models.CharField(max_length=255,blank=True, null=True) 
     email = models.EmailField(max_length=255,null=True, blank=True)

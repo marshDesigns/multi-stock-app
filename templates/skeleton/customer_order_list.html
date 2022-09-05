@@ -5,7 +5,7 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800" style='margin-top:20px;'>My Orders</h1>
+        <h1 class="h3 mb-0 text-gray-800" style='margin-top:20px;'>{{ request.user.username }}</h1>
     </div>
     <div class="card shadow mb-4" style='margin-top:30px;'>
         <div class="card-body">
@@ -22,20 +22,20 @@
                     </thead>
                     <tbody>
                         
-            {% if orders %}
-            {% for order in orders %}
+        
+            {% for item in orders %}
                     <tr>
                         <td>{{forloop.counter}}</td>
                        <!--<td><a href=" 'order_detail' order.id ">#ORDER_{{order.id}}</a></td>-->
-                        <td><a href="{% url 'customer-order-details' order.id %}">#ORDER_{{order.id}}</a></td>
-                        <td>{{order.first_name }} {{order.status}}</td>
-                        <td>{{order.created_at|timesince }}</td>
+                        <td><a href="{% url 'customer-order-details' item.id %}">#ORDER_{{item.id}}</a></td>
+                        <td>{{item.order_status }}</td>
+                        <td>{{item.created_at|timesince }}</td>
                         <td>
-                            <a class="btn btn-danger btn-sm" href="{% url 'customer-order-details' order.id %}">View</a>
+                            <a class="btn btn-danger btn-sm" href="{% url 'customer-order-details' item.id %}">View</a>
                         </td>
                     </tr
             {% endfor %}
-            {% endif %}
+            
                     </tbody>
                 </table>
             </div>

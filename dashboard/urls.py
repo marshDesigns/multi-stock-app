@@ -1,8 +1,11 @@
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
 from .views import (
     AdminOrders,
+    GeneratePdf,
     ProductDetailView,
+    GeneratePdfCustomer,
     CustomersView,
     SupplierOrderDetails,
     ChangeStatusView,
@@ -33,11 +36,16 @@ urlpatterns = [
     path("checkout/", views.cart_details, name="checkout"),
     path('success/', views.success, name="success"),
     path("admin_dash/", AdminOrders.as_view(), name="admin_dash"),
-     path("customer-orders/", CustomerOrders.as_view(), name="customer-orders"),
-     path('customer-order-details/<int:pk>/',CustomerOrderDetails.as_view(), name='customer-order-details'),
+    path("customer-orders/", CustomerOrders.as_view(), name="customer-orders"),
+    path('customer-order-details/<int:pk>/',CustomerOrderDetails.as_view(), name='customer-order-details'),
     path("customers/", CustomersView.as_view(), name="customers"),
     path('s_order_detail-<int:pk>-change', ChangeStatusView.as_view(), name='change_status'),
     path('order_summary/<slug:slug>/', ProductDetailView.as_view(), name='order_summary'),##check
+    path('pdf_file/', GeneratePdf.as_view(), name='pdf_file'),##check
+    path('pdf_customer/', GeneratePdfCustomer.as_view(), name='pdf_customer'),##check
+    path('register/', views.register, name='register'),
+    path('', auth_views.LoginView.as_view(template_name ='users/login.html',redirect_authenticated_user=True), name= 'login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name ='users/logout.html') , name= 'logout'),
     
    
 ]
