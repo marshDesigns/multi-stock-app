@@ -10,7 +10,8 @@ from .views import (
     SupplierOrderDetails,
     ChangeStatusView,
     CustomerOrders,
-    CustomerOrderDetails 
+    CustomerOrderDetails,
+    PrintPdfUsers,
     
 )
 
@@ -43,6 +44,7 @@ urlpatterns = [
     path('order_summary/<slug:slug>/', ProductDetailView.as_view(), name='order_summary'),##check
     path('pdf_file/', GeneratePdf.as_view(), name='pdf_file'),##check
     path('pdf_customer/', GeneratePdfCustomer.as_view(), name='pdf_customer'),##check
+    path('print-customers/', PrintPdfUsers.as_view(), name='print-customers'),##check
     path('register/', views.register, name='register'),
     path('', auth_views.LoginView.as_view(template_name ='users/login.html',redirect_authenticated_user=True), name= 'login'),
     path('logout/', auth_views.LogoutView.as_view(template_name ='users/logout.html') , name= 'logout'),

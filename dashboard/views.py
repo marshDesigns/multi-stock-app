@@ -94,6 +94,31 @@ class GeneratePdfCustomer(View):
             return response
         return HttpResponse('Error')
     
+class PrintPdfUsers(View):   
+    def get(self, request,*args, **kwargs):
+        template = get_template('skeleton/pdf.html')
+        orders = Customer.objects.all()
+        my_date = datetime.now()
+        formatted_date = my_date.strftime("%Y-%m-%d %H:%M:%S")
+        
+        context= {
+            'orders':orders,
+            'my_date':formatted_date,
+        }
+        
+        html = template.render(context)
+        pdf = render_to_pdf('skeleton/print_customers.html', context)
+        if pdf:
+            response =  HttpResponse(pdf, content_type='application/pdf')
+            filename = "Invoice_%s.pdf" %("124567772")
+            content = "inline; filename='%s'"%(filename)
+            download = request.GET.get('download')
+            if download:
+                content ="attachment; filename='%s'"%(filename)  
+            response['Content-Disposition'] = content        
+            return response
+        return HttpResponse('Error')
+    
     
 def viewProduct(request, product_slug):
     # Create instance of Cart class

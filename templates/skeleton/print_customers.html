@@ -1,0 +1,36 @@
+{% block content %}
+        <div class='wrapper'>
+            <div class='details'>
+              Date : {{my_date}}
+                <hr class='hrItem' />
+            </div>
+        </div>
+        <br>        
+            <div class="col-md-12">
+                <div class='table-responsive'>
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Username</th>
+                                <th scope="col">Supplier Name</th>
+                                <th scope="col">Email</th>
+                              
+                        
+                                <!-- <th>Quantity</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for orders in orders %}
+                            <tr style="text-align: center;">    
+                                <td>{{ orders.username }}</th>
+                                <td>{{ orders.first_name }}</td>
+                                <td>{{ orders.email }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table> 
+                </div> 
+            </div>
+        
+
+{% endblock %}
