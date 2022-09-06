@@ -238,7 +238,6 @@ def replyMessages(request, key):
 def addProducts(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
-        
         if form.is_valid():
             product = form.save(commit=True)
             product.vendor = request.user.vendor
@@ -347,32 +346,18 @@ def cart_details(request):
 
     # If Checkout
     if request.method == 'POST':
-        form = CheckoutForm(request.POST)
-        if form.is_valid():
+        form = Order()
+       # amount=int(cart.get_total_cost() * 100), # Amount in Cents
+        form.user = request.user.customer
+        form.first_name = request.POST.get('first_name')
+        form.last_name = request.POST.get('last_name')
+        form.email = request.POST.get('email')
+        form.phone = request.POST.get('phone')
+        form.address = request.POST.get('address')
         
-           # try:
-        
-            amount=int(cart.get_total_cost() * 100), # Amount in Cents
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            email = form.cleaned_data['email']
-            phone = form.cleaned_data['phone']
-            address = form.cleaned_data['address']
-              
-            order = checkout(request, first_name, last_name, email, phone, address, cart.get_total_cost())
-            
-            cart.clear()
-
-                # SEnd Email Notification
-            #notify_customer(order)
-            #notify_vendor(order)
-            return redirect('success')
-            
-           # except Exception:
-               # messages.error(request, "Something went wrong with payment.")
-            
-    else:
-        form = CheckoutForm()
+        order = checkout(request, form.user, form.first_name, form.last_name, form.email, form.phone, form.address, cart.get_total_cost())
+        cart.clear()
+        return redirect('success')
 
     remove_from_cart = request.GET.get('remove_from_cart', '')
     change_quantity = request.GET.get('change_quantity', '')
@@ -387,7 +372,7 @@ def cart_details(request):
         return redirect('my_cart')
     
     context ={
-        'form':form
+        
     }   
     return render(request, 'skeleton/my_cart.html', context)
 
@@ -408,7 +393,7 @@ class CustomerOrders(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["orders"] =Order.objects.filter(email = self.request.user.email)
+        context["orders"] =Order.objects.filter(user = self.request.user)
         return context
 
 # view order details

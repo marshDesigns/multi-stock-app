@@ -69,13 +69,32 @@
         {% csrf_token %}
         <div>
             <div class="col-md-5">
-                {{ form|crispy }}
-            </div> 
-            <div>
-                <div class="col-md-3">
+                <div>
+                    <input type="text" name='first_name' placeholder='First Name' class='form-group' />
+                  </div>
+                  <div>
+                    <input type="text" name='last_name' placeholder='Last Name' class='form-group' />
+                  </div>
+                  <div>
+                    <input type="email" name='email' placeholder='Email Address' class='form-group'/>
+                  </div>
+                  <div>
+                    <input type="text" name='phone' placeholder='Phone Number' class='form-group'/>
+                  </div>
+                  <div>
+                    <input type="text" name='address' placeholder='Home Address' class='form-group'/>
+                  </div>
+                  
+                  <div class="col-md-3">
                     <button class="btn btn-success">Checkout</button>
                 </div>
-            </div>
+                
+                </form>
+            </div> 
+          
+           
+                
+            
             <div style='padding:20px;'></div>
         </div>
     </form>

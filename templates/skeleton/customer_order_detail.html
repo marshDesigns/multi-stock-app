@@ -51,33 +51,55 @@
                         </tbody>
                     </table>
                     <hr />
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead class='bg-info'>
-                            <tr class="text-white row" style='justify-content:space-evenly'>
-                                <th scope='col'>Supplier</th>
-                                <th scope='col'>Product</th>
-                                <th scope='col'>Price</th>
-                                <th scope='col'>Quantity</th>
-                                <th scope='col'>Total Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for item in details.items.all %}
-                            {% if item.chero == request.user.chero %}
-                            <tr class='row' style='justify-content:space-evenly'>
-                                <td scope='col'>{{ item.vendor.first_name }}</td>
-                                <td scope='col'>{{ item.product.title }}</td>
-                                <td scope='col'>{{ item.product.price }}</td>
-                                <td scope='col'>{{ item.quantity }}</td>
-                                <td scope='col'>{{ item.get_total_price }}</td>
-                            {% endif %}
-                            {% endfor %}
-                            <tr>
-                        </tbody>
-                    </table>
+                    <div class="div-table">
+                        <div class="div-table-row">
+                            <div class="div-table-col edit">Supplier</div>
+                           <div class="div-table-col edit">Product</div>
+                           <div  class="div-table-col edit">Price</div>
+                           <div  class="div-table-col edit">Quantity</div>
+                           <div  class="div-table-col edit">Total Price</div>
+                        </div>
+                        {% for item in details.items.all %}
+                        {% if item.customer == request.user.customer %}
+                       <div class="div-table-row">
+                        <div class="div-table-col">{{ item.product.vendor }}</div>
+                        <div class="div-table-col">{{ item.product.title }}</div>
+                        <div class="div-table-col">{{ item.product.price }}</div>
+                        <div class="div-table-col">{{ item.quantity }}</div>
+                        <div class="div-table-col">{{ item.get_total_price }}</div>
+                       </div>
+                       {% endif %}
+                       {% endfor %}
+                    </div>
+                    <div style='margin-top:20px;'></div>
             </div>
         </div>    
     </div>
 </div>
+<style type='text/css'>
+    .div-table {
+        display: table;         
+        width: auto;         
+        background-color: #eee;         
+        border: 1px solid #666666;         
+        border-spacing: 5px; /* cellspacing:poor IE support for  this */
+      }
+      .div-table-row {
+        display: table-row;
+        width: auto;
+        clear: both;
+      }
+      .div-table-col {
+        float: left; /* fix for  buggy browsers */
+        display: table-column;         
+        width: 200px;         
+        background-color: #ccc;
+          
+      }
+      .edit{
+        font-weight:bold;
+        text-transform: uppercase;
+      }
+</style>
 
 {% endblock  %}

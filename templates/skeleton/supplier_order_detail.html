@@ -51,26 +51,28 @@
                         </tbody>
                     </table>
                     <hr />
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead class='bg-info'>
-                            <tr class="text-white">
-                                <th scope="col">Product</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Total Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for item in details.items.all %}
-                            {% if item.vendor == request.user.vendor %}
-                                <td>{{ item.product.title }}</td>
-                                <td>{{ item.product.price }}</td>
-                                <td>{{ item.quantity }}</td>
-                                <td>{{ item.get_total_price }}</td>
-                            {% endif %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                    
+                    <div class="div-table">
+                        <div class="div-table-row">
+                           <div class="div-table-col edit">Product</div>
+                           <div  class="div-table-col edit">Price</div>
+                           <div  class="div-table-col edit">Quantity</div>
+                           <div  class="div-table-col edit">Total Price</div>
+                        </div>
+                        {% for item in details.items.all %}
+                        {% if item.vendor == request.user.vendor %}
+                       <div class="div-table-row">
+                        
+                            <div class="div-table-col">{{ item.product.title }}</div>
+                           <div class="div-table-col">{{ item.product.price }}</div>
+                           <div class="div-table-col">{{ item.quantity }}</div>
+                           <div class="div-table-col">{{ item.get_total_price }}</div>
+                        
+                       </div>
+                       {% endif %}
+                       {% endfor %}
+                    </div>
+                    <div style='margin-top:20px;'></div>
                     <form action="{% url 'change_status' details.id %}" method='POST'>
                         {% csrf_token %}
                         <select name='status'>
@@ -84,5 +86,30 @@
         </div>    
     </div>
 </div>
+<style type='text/css'>
+    .div-table {
+        display: table;         
+        width: auto;         
+        background-color: #eee;         
+        border: 1px solid #666666;         
+        border-spacing: 5px; /* cellspacing:poor IE support for  this */
+      }
+      .div-table-row {
+        display: table-row;
+        width: auto;
+        clear: both;
+      }
+      .div-table-col {
+        float: left; /* fix for  buggy browsers */
+        display: table-column;         
+        width: 200px;         
+        background-color: #ccc;
+          
+      }
+      .edit{
+        font-weight:bold;
+        text-transform: uppercase;
+      }
+</style>
 
 {% endblock  %}

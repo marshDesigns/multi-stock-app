@@ -23,9 +23,11 @@
                         </tr>
                     </thead>
                     <tbody>
+                        
             {% if orders %}
             {% for order in orders %}
                     <tr>
+                        
                         <td>{{forloop.counter}}</td>
                        <!--<td><a href=" 'order_detail' order.id ">#ORDER_{{order.id}}</a></td>-->
                         <td><a href="{% url 's_order_detail' order.id %}">#ORDER_{{order.id}}</a></td>

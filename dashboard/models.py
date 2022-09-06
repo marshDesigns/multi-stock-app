@@ -101,7 +101,7 @@ METHOD = (
 
 
 class Order(models.Model):
-    customer = models.ManyToManyField(Customer, related_name="orders", null=True, blank=True)
+    user = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
     first_name =models.CharField(max_length=255,null=True,blank=True)
     last_name = models.CharField(max_length=255,blank=True, null=True) 
     email = models.EmailField(max_length=255,null=True, blank=True)
@@ -123,6 +123,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name="items", on_delete=models.CASCADE,null=True,blank=True)
     product = models.ForeignKey(Product, related_name="items", on_delete=models.CASCADE,null=True,blank=True)
     vendor = models.ForeignKey(Vendor, related_name="items", on_delete=models.CASCADE)
+    user = models.ForeignKey(Customer, related_name="items", on_delete=models.CASCADE,null=True,blank=True)
     vendor_paid = models.BooleanField(default=False)
     price = models.DecimalField(max_digits=50, decimal_places=2)
     quantity = models.IntegerField(default=1)
