@@ -458,6 +458,21 @@ def updateUser(request, key):
     }
     return render(request, 'skeleton/update_user.html', context)
 
+@login_required(login_url='login')
+def updateSupplierAccount(request):
+    vendor = Vendor.objects.get(username = request.user.username)
+    if request.method == 'POST':
+        form = SupplierForm(request.POST, instance=vendor)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = SupplierForm(instance=vendor)
+    context = {
+        'form': form,
+    }
+    return render(request, 'skeleton/supplier_update_acc.html', context)
+
 # delete stock form database
 @login_required(login_url='login')
 def delete(request, key):

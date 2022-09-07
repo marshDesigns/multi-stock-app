@@ -22,7 +22,7 @@
                             <th scope="col">MCAZ License</th>
                             <th scope="col">Email</th>
                             <th scope="col">Joined</th>
-                            <th scope="col">Action</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -33,9 +33,6 @@
                             <td>{{ p.mcaz_license }}</td>
                             <td>{{ p.email }}</td>
                             <td>{{ p.created_at|timesince }}</td>
-                            <td>
-                                <a class="btn btn-info btn-sm" href="{% url 'update-user' p.id %}">Edit</a>
-                            </td>
         
                         </tr>
                         {% endfor %}

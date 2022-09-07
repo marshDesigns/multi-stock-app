@@ -10,7 +10,6 @@ class SupplierForm(UserCreationForm):
     class Meta:
         model = Vendor
         fields =[
-            'image',
             'username',
             'mcaz_license',
             'email',
@@ -41,7 +40,6 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields =[
-            'image',
             'title',
             'category',
             'pack_size',
