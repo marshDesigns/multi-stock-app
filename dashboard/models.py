@@ -27,8 +27,6 @@ CATEGORY_CHOICES = (
 class Vendor(User):
     
     created_at = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(upload_to='uploads/',blank=True, null= True)
-    thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
     mcaz_license = models.CharField(null=True,blank=True,unique=True,max_length=255,help_text='MCAZ License Number')
     
     REQUIRED_FIELDS = ["mcaz_license"]
@@ -58,8 +56,6 @@ class Product(models.Model):
     pack_size = models.CharField(max_length=255,null=True,blank=True)
     quantity = models.PositiveIntegerField(default=1)
     expiry_date = models.DateField(blank=True,null=True, help_text='date in format yyyy-mm-dd')
-    image = models.ImageField(upload_to='uploads/',blank=True, null=True)
-    thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
 
     class Meta:
         ordering = ['-added_date']
@@ -67,31 +63,6 @@ class Product(models.Model):
     def __str__(self):
         return self.title
     
-    def get_thumbnail(self):
-        if self.thumbnail:
-            return self.thumbnail.url
-        else:
-            if self.image:
-                self.thumbnail = self.make_thumbnail(self.image)
-                self.save()
-                return self.thumbnail.url
-            
-            else:
-                # Default Image
-                return 'https://via.placeholder.com/240x180.jpg'
-    
-    # Generating Thumbnail - Thumbnail is created when get_thumbnail is called
-    def make_thumbnail(self, image, size=(300, 200)):
-        img = Image.open(image)
-        img.convert('RGB')
-        img.thumbnail(size)
-
-        thumb_io = BytesIO()
-        img.save(thumb_io, 'JPEG', quality=85)
-
-        thumbnail = File(thumb_io, name=image.name)
-
-        return thumbnail
     
        
 #Orders Model 
@@ -106,7 +77,6 @@ ORDER_STATUS = (
 METHOD = (
     ("Cash On Delivery", "Cash On Delivery"),
 )
-
 
 
 class Order(models.Model):
