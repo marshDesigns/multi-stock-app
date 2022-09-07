@@ -89,6 +89,36 @@
         {% if request.user.vendor %}
         <!-- Nav Item - User Information -->
         <!-- Nav Item - User Information -->
+        <li class="nav-item dropdown no-arrow mx-1">
+            <a class="nav-link dropdown-toggle text-white" href="#" id="alertsDropdown" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='navbarDropdown'>
+                <i class="fas fa-calendar-check fa-fw"></i>
+                <!-- Counter - Alerts -->
+                <span class="badge badge-danger badge-counter" id='notification-badge'>0</span>
+            </a>
+            <!-- Dropdown - Alerts -->
+            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="alertsDropdown"  id='notifications-dropdown'>
+                <h6 class="dropdown-header">
+                    Products to Expire
+                </h6>
+                {% for i in notifications %}
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                    <div class="mr-3">
+                        <div class="icon-circle bg-primary">
+                            <i class="fas fa-file-alt text-white"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="small text-gray-500">Here</div>
+                        <span class="font-weight-bold">Here</span>
+                    </div>
+                </a>
+                {% endfor %}
+               
+            </div>
+        </li>
+        
         <li class="nav-item  no-arrow">
             <a class="nav-link text-white" href="{% url 'logout' %}"  role="button" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-white small">Logout</span>

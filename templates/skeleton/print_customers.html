@@ -11,9 +11,10 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead class="thead-dark">
                             <tr>
-                                <th scope="col">Username</th>
-                                <th scope="col">Supplier Name</th>
+                                <th scope="col">Phamarcy Name</th>
+                                <th scope="col">MCAZ License</th>
                                 <th scope="col">Email</th>
+                                <th scope="col">Joined</th>
                               
                         
                                 <!-- <th>Quantity</th> -->
@@ -23,8 +24,9 @@
                             {% for orders in orders %}
                             <tr style="text-align: center;">    
                                 <td>{{ orders.username }}</th>
-                                <td>{{ orders.first_name }}</td>
+                                <td>{{ orders.mcaz_license }}</td>
                                 <td>{{ orders.email }}</td>
+                                <td>{{ orders.created_at|timesince }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

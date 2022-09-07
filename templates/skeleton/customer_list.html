@@ -18,9 +18,10 @@
                     <thead class='bg-info'>
                         <tr class="text-white">
                             <th scope="col">#</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Supplier Name</th>
+                            <th scope="col">Pharmacy Name</th>
+                            <th scope="col">MCAZ License</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Joined</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -29,8 +30,9 @@
                         <tr>
                             <td>{{forloop.counter}}</td>
                             <td>{{ p.username }}</td>
-                            <td>{{ p.first_name }}</td>
+                            <td>{{ p.mcaz_license }}</td>
                             <td>{{ p.email }}</td>
+                            <td>{{ p.created_at|timesince }}</td>
                             <td>
                                 <a class="btn btn-info btn-sm" href="{% url 'update-user' p.id %}">Edit</a>
                             </td>

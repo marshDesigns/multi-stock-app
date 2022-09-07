@@ -62,11 +62,11 @@
                         {% for item in details.items.all %}
                         {% if item.customer == request.user.customer %}
                        <div class="div-table-row">
-                        <div class="div-table-col">{{ item.product.vendor }}</div>
-                        <div class="div-table-col">{{ item.product.title }}</div>
-                        <div class="div-table-col">{{ item.product.price }}</div>
-                        <div class="div-table-col">{{ item.quantity }}</div>
-                        <div class="div-table-col">{{ item.get_total_price }}</div>
+                        <div class="div-table-col edit2">{{ item.product.vendor }}</div>
+                        <div class="div-table-col edit2">{{ item.product.title }}</div>
+                        <div class="div-table-col edit2">{{ item.product.price }}</div>
+                        <div class="div-table-col edit2">{{ item.quantity }}</div>
+                        <div class="div-table-col edit2">{{ item.get_total_price }}</div>
                        </div>
                        {% endif %}
                        {% endfor %}
@@ -78,10 +78,11 @@
 </div>
 <style type='text/css'>
     .div-table {
-        display: table;         
+        display: table;      
+        border-radius: 5px;   
         width: auto;         
         background-color: #eee;         
-        border: 1px solid #666666;         
+        border: 2px solid #9FC9F3;         
         border-spacing: 5px; /* cellspacing:poor IE support for  this */
       }
       .div-table-row {
@@ -99,6 +100,82 @@
       .edit{
         font-weight:bold;
         text-transform: uppercase;
+        background-color:#7FBCD2;
+        padding: 2px;
+        color:black;
+      }
+      .edit2{
+        background-color:transparent;
+        color:#3120E0;
+        font-weight:bold;
+        padding: 2px;
+      }
+      .edit3{
+
+      }
+      select {
+
+        /* styling */
+        background-color: white;
+        border: thin solid blue;
+        border-radius: 4px;
+        display: inline-block;
+        font: inherit;
+        line-height: 1.5em;
+        padding: 0.5em 3.5em 0.5em 1em;
+      
+        /* reset */
+      
+        margin: 0;      
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+      }
+
+      select.edit3 {
+        background-image:
+          linear-gradient(45deg, transparent 50%, gray 50%),
+          linear-gradient(135deg, gray 50%, transparent 50%),
+          linear-gradient(to right, #7FBCD2, #7FBCD2);
+        background-position:
+          calc(100% - 20px) calc(1em + 2px),
+          calc(100% - 15px) calc(1em + 2px),
+          calc(100% - 2.5em) 0.5em;
+        background-size:
+          5px 5px,
+          5px 5px,
+          1px 1.5em;
+        background-repeat: no-repeat;
+      }
+      
+      select.edit3:focus {
+        background-image:
+          linear-gradient(45deg, green 50%, transparent 50%),
+          linear-gradient(135deg, transparent 50%, green 50%),
+          linear-gradient(to right, #7FBCD2, #7FBCD2);
+        background-position:
+          calc(100% - 15px) 1em,
+          calc(100% - 20px) 1em,
+          calc(100% - 2.5em) 0.5em;
+        background-size:
+          5px 5px,
+          5px 5px,
+          1px 1.5em;
+        background-repeat: no-repeat;
+        border-color: #7FBCD2;
+        outline: 0;
+      }
+      
+      
+      select:-moz-focusring {
+        color: transparent;
+        text-shadow: 0 0 0 #000;
+      }
+
+      option{
+        font-weight: bold;
       }
 </style>
 

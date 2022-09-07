@@ -97,7 +97,7 @@ class GeneratePdfCustomer(View):
 class PrintPdfUsers(View):   
     def get(self, request,*args, **kwargs):
         template = get_template('skeleton/pdf.html')
-        orders = Customer.objects.all()
+        orders = Vendor.objects.all()
         my_date = datetime.now()
         formatted_date = my_date.strftime("%Y-%m-%d %H:%M:%S")
         

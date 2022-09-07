@@ -12,7 +12,7 @@ class SupplierForm(UserCreationForm):
         fields =[
             'image',
             'username',
-            'first_name',
+            'mcaz_license',
             'email',
             'password1',
             'password2',
@@ -27,7 +27,6 @@ class CreateUserForm(UserCreationForm):
         model = Customer
         fields = [
             'username',
-            'id_number',
             'email',
             'first_name',
             'last_name',

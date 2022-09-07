@@ -36,12 +36,14 @@
                                 <td>{{item.product.category}}</td>
                                 <td>${{ item.total_price }}</td>
                                 <td>{{item.quantity}}</td>
-                                <td class='row'>
-                                    <a href="?change_quantity={{ item.id }}&quantity=-1" style='color:green;'><i class="fas fa-minus fa-fw"></i></a>
+                                <td>
+                                    <div class='row'>
+                                        <a href="?change_quantity={{ item.id }}&quantity=-1" style='color:green;'><i class="fas fa-minus fa-fw"></i></a>
                                     <div style='width:15px;'></div>
                                     <a href="?change_quantity={{ item.id }}&quantity=1" style='color:blue;'><i class="fas fa-plus fa-fw"></i></a>
                                     <div style='width:15px;'></div>
                                     <a href="?remove_from_cart={{item.id}}" style='color:red;' class="delete"><i class="fas fa-trash fa-fw"></i></a>
+                                    </div>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -50,21 +52,23 @@
                 </table>
             </div>
 
-            <div class='row'>
-                <strong>Total Items</strong>
-                <span style='margin-left:15px;'></span>
-                <strong>{{ cart|length }}</strong>
-            </div>
-            <div class='row'>
-                <strong>Total Cost</strong>
-                <span style='margin-left:15px;'></span>
-                <td colspan="2">${{cart.get_total_cost}}</td>
+            <div class='price'>
+                <div class='row'>
+                    <strong class='items1'>Total Items :</strong>
+                    <span style='margin-left:15px;'></span>
+                    <strong class='items2'>{{ cart|length }}</strong>
+                </div>
+                <hr />
+                <div class='row'>
+                    <strong class='cost1'>Total Cost :</strong>
+                    <span style='margin-left:15px;'></span>
+                    <div class='cost2'>${{cart.get_total_cost}}</div>
+                </div>
             </div>
 
-            <hr />   
         </div>
     </div>
-    <h2 class="subtitle">Contact Information</h2>
+    <h2 class="subtitle heading">Contact Information</h2>
     <form method="POST">
         {% csrf_token %}
         <div>
@@ -102,5 +106,36 @@
     <p>No items in cart</p>
     {% endif %}
 </div>
+
+
+<style type='text/css'>
+    .heading{
+        font-weight: bold;
+        color:#5b7be0;
+    }
+    .price{
+        padding:20px;
+    }
+    .cost1, .items1{
+        text-transform:uppercase;
+        color:#5b7be0;
+        font-weight:bold;
+    }
+    .cost2, .items2{
+        text-transform:uppercase;
+        color:#FF4A4A;
+        font-weight:bold;
+    }
+    input{
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 6px;
+        margin-bottom: 16px;
+        resize: vertical;
+    }
+</style>
 
 {% endblock  %}

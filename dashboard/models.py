@@ -11,9 +11,16 @@ from django.conf import settings
 # Create your models here.
 
 CATEGORY_CHOICES = (
-    ('Pills', 'Pills'),
-    ('Bandages', 'Bandages'),
-    ('Specs', 'Specs')
+    ('Tablets', 'Tablets'),
+    ('Capsules', 'Capsules'),
+    ('Suspension', 'Suspension'),
+    ('Surgical', 'Surgical'),
+    ('Suppository', 'Suppository'),
+    ('Pessary', 'Pessary'),
+    ('Ampule', 'Ampule'),
+    ('Vial', 'Vial'),
+    ('Pen set', 'Pen set'),
+    ('Other', 'Other')
 )
 
 
@@ -22,6 +29,9 @@ class Vendor(User):
     created_at = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='uploads/',blank=True, null= True)
     thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
+    mcaz_license = models.CharField(null=True,blank=True,unique=True,max_length=255,help_text='MCAZ License Number')
+    
+    REQUIRED_FIELDS = ["mcaz_license"]
 
     def get_balance(self):
         items = self.items.filter(vendor_paid=False, order__vendors__in=[self.id])
@@ -32,10 +42,9 @@ class Vendor(User):
         return sum((item.product.price * item.quantity) for item in items)
     
 class Customer(User):
+    created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True)
     
-    id_number = models.CharField(null=True,blank=True,unique=True,max_length=255)
     
-
 #admin and customer models
 #Products model
 class Product(models.Model):
@@ -48,7 +57,7 @@ class Product(models.Model):
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=255,null=True, blank=True)
     pack_size = models.CharField(max_length=255,null=True,blank=True)
     quantity = models.PositiveIntegerField(default=1)
-    expiry_date = models.DateField(blank=True,null=True)
+    expiry_date = models.DateField(blank=True,null=True, help_text='date in format yyyy-mm-dd')
     image = models.ImageField(upload_to='uploads/',blank=True, null=True)
     thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
 

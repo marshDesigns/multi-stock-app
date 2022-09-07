@@ -1,12 +1,12 @@
 {% extends 'body/base.html' %}  
-{% block title %} Add Users{% endblock  %}
+{% block title %} Add Staff{% endblock  %}
 {% load crispy_forms_tags %}
 {% block content %}
 
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800" style='margin-top:20px;'>Add Users</h1>
+        <h1 class="h3 mb-0 text-gray-800" style='margin-top:20px;'>Add Staff</h1>
     </div>
     <div class='row my-4'>
         <div class='col-md'>
@@ -23,7 +23,7 @@
                     {{ form|crispy }}
                 </div>
                 <div class='col-6 col-md-4 float-center'>
-                    <input class="btn btn-success btn-block" type="submit" value="Add User">
+                    <input class="btn btn-success btn-block" type="submit" value="Submit">
                 </div>
                 
             </form>
