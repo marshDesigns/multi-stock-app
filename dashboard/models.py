@@ -29,6 +29,7 @@ class Vendor(User):
     
     created_at = models.DateTimeField(auto_now_add=True)
     mcaz_license = models.CharField(null=True,blank=True,unique=True,max_length=255,help_text='MCAZ License Number')
+    phone_number = models.CharField(null=True,blank=True,unique=True,max_length=255,help_text='whatsapp number')
     
     REQUIRED_FIELDS = ["mcaz_license"]
 

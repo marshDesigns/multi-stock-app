@@ -6,14 +6,18 @@
 <div class="container-fluid">
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800" style="margin-top: 20px">
-      {{ vendor.first_name }} {{ vendor.last_name }}
-    </h1>
+    <h5 class="h3 mb-0 text-gray-800" style="margin-top: 20px">
+      {{ vendor.username }} - Available Products
+    </h5>
   </div>
   
 <div class="card shadow mb-4" style="margin-top: 30px">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Available Products</h6>
+    <div class=''>
+      <a class="m-0 font-weight-bold text-primary" style='' href="https://wa.me/{{ vendor.phone_number }}?text=I'm%20inquiring%20about%20the%20product%20in%20your%20listing">
+        <i class="fab fa-whatsapp-square" style='color:green;font-size:30px;'></i>
+      </a>
+    </div>
   </div>
   <div class="card-body">
     <div class="card-body">

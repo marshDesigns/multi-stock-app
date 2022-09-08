@@ -13,6 +13,7 @@ class SupplierForm(UserCreationForm):
             'username',
             'mcaz_license',
             'email',
+            'phone_number',
             'password1',
             'password2',
             #'is_staff',
