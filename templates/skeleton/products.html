@@ -24,8 +24,7 @@
                                 <th scope="col">Pack Size</th>
                                 <th scope='col'>Quantity</th>
                                 <th scope="col">Price(Each)</th>
-                                <th scope="col">Expiry Date</th>
-                                
+                                <th scope="col">Expiry Date</th>   
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -39,7 +38,6 @@
                                 <td>{{ stocks.quantity }}</td>
                                 <td>$ {{ stocks.price }}</td>
                                 <td>{{ stocks.expiry_date }}</td>
-                               
                                 <td>
                                     <a class="btn btn-info btn-sm" href="{% url 'update' stocks.id %}">Edit</a>
                                     <a class="btn btn-danger btn-sm" href="{% url 'delete' stocks.id %}">Delete</a>

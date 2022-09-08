@@ -29,6 +29,7 @@ Django==4.0.7
 django-celery-beat==2.3.0
 django-celery-results==2.4.0
 django-crispy-forms==1.14.0
+django-crontab==0.7.1
 django-filter==22.1
 django-heroku==0.3.1
 django-timezone-field==5.0

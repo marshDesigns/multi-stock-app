@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'channels',
     'django_celery_beat',
     'django_celery_results',
+    'django_crontab',
     'notifications_app',
 ]
 
@@ -71,6 +72,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'dashboard.context_processors.notifications',
                 'dashboard.context_processors.cart',
+                #'dashboard.context_processors.expiry_date',
             ],
         },
     },
