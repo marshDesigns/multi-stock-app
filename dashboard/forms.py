@@ -61,12 +61,3 @@ class CheckoutForm(forms.Form):
 class AddToCartForm(forms.Form):
     quantity = forms.IntegerField(max_value=100)     
 
-
-class MessageForm(forms.ModelForm):
-    class Meta:
-        model = Message
-        fields = [
-            'email',
-            'phone_number',
-            'message',
-        ]  

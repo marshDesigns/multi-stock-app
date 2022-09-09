@@ -1,5 +1,5 @@
 {% extends 'body/base.html' %}  
-{% block title %} Add Users{% endblock  %}
+{% block title %}Reply Message{% endblock  %}
 {% load crispy_forms_tags %}
 {% block content %}
 
@@ -15,15 +15,15 @@
                     <table class="table bg-white table-borderless">
                         <tbody>
                             <tr>
-                                <th scope="row">Email</th>
-                                <td>{{ reply.email }}</td>
+                                <th scope="row">Sent By</th>
+                                <td>{{ reply.user.first_name }}</td>
                             </tr>
                             <tr>
-                                <th scope="row">Phone Number</th>
-                                <td>{{ reply.phone_number }}</td>
+                                <th scope="row">Customer Email</th>
+                                <td>{{ reply.user.email }}</td>
                             </tr>
                             <tr>
-                                <th scope="row">Message</th>
+                                <th scope="row">Message Sent</th>
                                 <td>{{ reply.message }}</td>
                             </tr>
                         </tbody>
@@ -32,9 +32,10 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800" style='margin-top:20px;'>Reply</h1>
                     </div>
-                    <form action="#" class="contact-form">
+                    <form action="#" class="contact-form" method="POST">
+                        {% csrf_token %}
                         <div>
-                          <input type="email" name='email' class="form-control rounded border-white mb-3 form-input" id="name" placeholder="Email" required>
+                          <input type="email" name='email' value='{{reply.user.email}}' class="form-control rounded border-white mb-3 form-input" id="name" placeholder="Email" required>
                         </div>
                         <div>
                           <input type="subject" name='subject' class="form-control rounded border-white mb-3 form-input" placeholder="Subject" required>

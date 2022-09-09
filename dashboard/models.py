@@ -121,8 +121,20 @@ class OrderItem(models.Model):
     
 class Message(models.Model):
     
-    email = models.CharField(max_length=200, blank=True,null=True)
+    user = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
+    email_to = models.CharField(max_length=200, blank=True,null=True)
     phone_number = models.CharField(max_length=200,blank=True,null=True)
+    message = models.TextField(max_length=1000, blank=True, null=True)
+    date_sent = models.DateField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.email_to
+    
+
+class RepliedMessage(models.Model):
+    user = models.ForeignKey(Vendor, on_delete=models.CASCADE, null=True, blank=True)
+    email = models.CharField(max_length=200, blank=True,null=True)
+    subject = models.CharField(max_length=200,blank=True,null=True)
     message = models.TextField(max_length=1000, blank=True, null=True)
     date_sent = models.DateField(auto_now_add=True)
     

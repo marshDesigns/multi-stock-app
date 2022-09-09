@@ -8,10 +8,10 @@ from django.shortcuts import render, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from dashboard.utilities import checkout, notify_customer, notify_vendor
+from dashboard.utilities import checkout, notify_customer, notify_vendor, replied_message, saved_message
 
 from .models import *
-from .forms import AddToCartForm, ProductForm, CheckoutForm, MessageForm, SupplierForm
+from .forms import AddToCartForm, ProductForm, SupplierForm
 from django.contrib import messages
 from django.views.generic import DetailView, View,  TemplateView
 from django.urls import reverse_lazy
@@ -148,9 +148,18 @@ def viewProduct(request, product_slug):
 
 def viewVendorProducts(request, key):
     vendor = get_object_or_404(Vendor, pk=key)
-    
+    if request.method == 'POST':
+        send = Message()
+        send.user = request.user.customer
+        send.email_to = request.POST.get('email_to')
+        send.phone_number = request.POST.get('phone_number')
+        send.message = request.POST.get('message') 
+        saved_message(send.user, send.email_to, send.phone_number, send.message)
+        return redirect('index')
+       
     context= {
         'vendor': vendor,
+      
     }
     return render(request, 'skeleton/supplier_products.html', context)
     
@@ -166,16 +175,12 @@ def index(request):
             title = form.cleaned_data.get('title')
             messages.success(request, f'broadcast added')
             return redirect('index')
-        send = MessageForm(request.POST)
-        if send.is_valid():
-            send.save()
-            return redirect('index')
+        
     else:
         form = BroadcastForm()
-        send = MessageForm()
 
     suppliers = Vendor.objects.all()
-    sent_msgs = Message.objects.all()
+    sent_msgs = Message.objects.filter(email_to = request.user.email)
     orders = Order.objects.all()
 
     total_customers = suppliers.count()
@@ -192,7 +197,6 @@ def index(request):
         'room_name': "broadcast",
         'total_messages': total_messages,
         'form': form,
-        'send': send,
         'total_products':total_products,
         'total_orders': total_orders,
       
@@ -211,27 +215,43 @@ def products(request,):
 
 @login_required(login_url='login')
 def viewMessages(request):
+    view_msg = Message.objects.filter(email_to = request.user.email)
     context = {
-        'view_msg': Message.objects.all(),
+        'view_msg': view_msg,
     }
     return render(request, 'skeleton/messages.html', context)
 
+
+@login_required(login_url='login')
+def myMessages(request):
+    view_msg = RepliedMessage.objects.filter(email = request.user.email)
+    context = {
+        'view_msg': view_msg,
+    }
+    return render(request, 'skeleton/customer_messages.html', context)
 
 # reply messages sent user customers
 @login_required(login_url='login')
 def replyMessages(request, key):
     if request.method == 'POST':
-        email = request.POST['email']
-        subject = request.POST['subject']
-        message = request.POST['message']
-        msg_from = settings.EMAIL_HOST_USER
-
-        send_mail(email, subject, message, msg_from)
-        return render(request, 'skeleton/reply_msg.html')
+        replied = RepliedMessage()
+        replied.user = request.user.vendor
+        replied.email = request.POST.get('email')
+        replied.subject = request.POST.get('subject')
+        replied.message = request.POST.get('message')
+        replied_message(replied.user, replied.email, replied.subject, replied.message)
+        return redirect(request, 'messages')
 
     context = {
         'reply': Message.objects.get(id=key), }
     return render(request, 'skeleton/reply_msg.html', context)
+
+
+@login_required(login_url='login')
+def viewMessage(request, key):
+    context = {
+        'view': RepliedMessage.objects.get(id=key), }
+    return render(request, 'skeleton/view_msg.html', context)
 
 # add stock products
 @login_required(login_url='login')
@@ -259,7 +279,7 @@ def supplier_Inventory(request):
     
     products = vendor.products.all()
     orders = vendor.orders.all()
-    messages = Message.objects.all()
+    messages = Message.objects.filter(email_to=request.user.email)
     
     total_orders = orders.count()
     total_products = products.count()

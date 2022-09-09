@@ -26,6 +26,7 @@ urlpatterns = [
     path('add_products/', views.addProducts , name= 'add_products'),##check
     path('messages/', views.viewMessages , name= 'messages'),##check
     path('reply_msg/<int:key>/', views.replyMessages , name= 'reply_msg'),##check
+    path('view-message/<int:key>/', views.viewMessage , name= 'view-message'),##check
     path('add_users/', views.addUsers , name= 'add_users'),##check
     path('add_supplier/', views.addSupplier , name= 'add_supplier'),##check
     path('delete/<int:key>', views.delete, name= 'delete'),##check
@@ -46,6 +47,7 @@ urlpatterns = [
     path('pdf_file/', GeneratePdf.as_view(), name='pdf_file'),##check
     path('pdf_customer/', GeneratePdfCustomer.as_view(), name='pdf_customer'),##check
     path('print-customers/', PrintPdfUsers.as_view(), name='print-customers'),##check
+    path('my-messages/', views.myMessages, name='my-messages'),##check
     path('register/', views.register, name='register'),
     path('', auth_views.LoginView.as_view(template_name ='users/login.html',redirect_authenticated_user=True), name= 'login'),
     path('logout/', auth_views.LogoutView.as_view(template_name ='users/logout.html') , name= 'logout'),

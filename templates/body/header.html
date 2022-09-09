@@ -126,31 +126,7 @@
         </li>
         
         {% else %}
-        <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle text-white" href="#" id="alertsDropdown" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='navbarDropdown'>
-                <i class="fas fa-envelope fa-fw"></i>
-                <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter" id='notification-badge'><i class='fas fa-paper-plane'></i></span>
-            </a>
-            <!-- Dropdown - Alerts -->
-            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                aria-labelledby="alertsDropdown"  id='notifications-dropdown'>
-                <h6 class="dropdown-header">
-                    Message Center
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#"  data-toggle="modal" data-target="#exampleModal">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-primary">
-                            <i class="fas fa-file-alt text-white"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <span class="font-weight-bold">Send Message</span>
-                    </div>
-                </a>
-            </div>
-        </li>
+        
         <div class="topbar-divider d-none d-sm-block"></div>
         {% endif %}
         <!-- Modal -->
@@ -169,6 +145,13 @@
                 <i class="fas fa-shopping-cart fa-fw"></i>
                 <!-- Counter - Alerts -->
                 <span class="badge badge-danger badge-counter" id='notification-badge'>{% if cart %}{{cart|length}}{% endif %}</span>
+            </a>
+        </li>
+        <li class="nav-item no-arrow">
+            <a class="nav-link text-white" href="{% url 'my-messages' %}" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-comments fa-fw"></i>
+                <!-- Counter - Alerts -->
+                <span class="badge badge-danger badge-counter" id='notification-badge'></span>
             </a>
         </li>
 
@@ -199,29 +182,7 @@
    
     </ul>
 </nav>
-<!-- End of Topbar -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Send Message</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form method="POST">
-        <div class="modal-body">
-            {% csrf_token %}
-            {{ send|crispy }}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <input class="btn btn-success" type="submit" value="Submit">
-        </div>
-        </form>
-      </div>
-    </div>
-</div>
+
 
 </header>
 

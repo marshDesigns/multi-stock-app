@@ -1,0 +1,37 @@
+{% extends 'body/base.html' %}  
+{% block title %}Reply Message{% endblock  %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800" style='margin-top:20px;'>Message</h1>
+    </div>
+    <div class='row my-4'>
+        <div class='col-md'>
+            <div class='row'>
+                <div class='col-md-8'>
+                    <table class="table bg-white table-borderless">
+                        <tbody>
+                            <tr>
+                                <th scope="row">Sent By</th>
+                                <td>{{ view.user.username }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Message Subject</th>
+                                <td>{{ view.subject }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Message Sent</th>
+                                <td>{{ view.message }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

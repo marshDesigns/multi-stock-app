@@ -13,10 +13,14 @@
   
 <div class="card shadow mb-4" style="margin-top: 30px">
   <div class="card-header py-3">
-    <div class=''>
+    <div class='row'>
       <a class="m-0 font-weight-bold text-primary" style='' href="https://wa.me/{{ vendor.phone_number }}?text=I'm%20inquiring%20about%20the%20product%20in%20your%20listing">
         <i class="fab fa-whatsapp-square" style='color:green;font-size:30px;'></i>
       </a>
+      <div style='width:20px;'></div>
+      <a class="m-0 font-weight-bold text-primary" data-toggle="modal" data-target="#exampleModal" href='#'>
+        <i class="fas fa-envelope" style='color:#4e73df; font-size:30px;'></i>
+    </a>
     </div>
   </div>
   <div class="card-body">
@@ -60,6 +64,55 @@
   </div>
 
 </div>
+
+<!-- End of Topbar -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Send Message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST">
+      <div class="modal-body">
+          {% csrf_token %}
+          <div class='col-md-8'>
+            <div>
+              <label>Email To</label>
+              <input type="email" name='email_to' class="form-group" id="name" value='{{ vendor.email }}' required/>
+            </div>
+            <div>
+              <label>Phone Number</label>
+              <input type="number" name='phone_number' class="form-group" value='{{ vendor.phone_number }}' required>
+            </div>
+            <div>
+              <label>Subject</label>
+              <textarea id="message" name='message' class="form-control rounded border-white mb-3 form-text-area" rows="5" cols="30" placeholder="Message" required></textarea>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button class="btn btn-success">Submit</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+  input{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+</style>
 
 
   {% endblock %}

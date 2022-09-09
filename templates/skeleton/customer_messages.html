@@ -21,6 +21,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Send By</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Subject</th>
                             <th scope="col">Date Received</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -29,11 +30,12 @@
                         {% for view_msg  in view_msg  %}
                         <tr>
                             <td>{{forloop.counter}}</td>
-                            <td>{{ view_msg.user.first_name }} {{ view_msg.user.last_name}}</td>
+                            <td>{{ view_msg.user.username }}</td>
                             <td>{{ view_msg.user.email }}</td>
+                            <td>{{ view_msg.subject }}</td>
                             <td>{{ view_msg.date_sent }}</td>
                             <td>
-                                <a class="btn btn-info btn-sm" href="{% url 'reply_msg' view_msg.id %}">View</a>
+                                <a class="btn btn-info btn-sm" href="{% url 'view-message' view_msg.id %}">View</a>
                             </td>
                         </tr>
                         {% endfor %}
