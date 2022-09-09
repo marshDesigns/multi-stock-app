@@ -123,9 +123,7 @@ class PrintPdfUsers(View):
 def viewProduct(request, product_slug):
     # Create instance of Cart class
     cart = Cart(request)
-
     product = get_object_or_404(Product, slug=product_slug)
-
     # Check whether the AddToCart button is clicked or not
     if request.method == 'POST':
         form = AddToCartForm(request.POST)
@@ -146,6 +144,7 @@ def viewProduct(request, product_slug):
     }
     return render(request, 'skeleton/view_product.html', context)
 
+
 def viewVendorProducts(request, key):
     vendor = get_object_or_404(Vendor, pk=key)
     if request.method == 'POST':
@@ -165,7 +164,6 @@ def viewVendorProducts(request, key):
     
 # home page for both staff and customers defined by user permissions
 def index(request): 
-    
     vendors = Vendor.objects.all()
     product = Product.objects.all()
     if request.method == 'POST':
@@ -273,6 +271,7 @@ def addProducts(request):
     }
     return render(request, 'skeleton/add_products.html', context)
 
+## supplier inventory page
 @login_required(login_url='login')
 def supplier_Inventory(request):
     vendor = request.user.vendor
@@ -400,6 +399,7 @@ def success(request):
     return render(request, 'skeleton/success.html')
 
 
+## view orders admin
 class AdminOrders(TemplateView):
     template_name= 'skeleton/admin_dash.html'
     
@@ -408,6 +408,8 @@ class AdminOrders(TemplateView):
         vendor = self.request.user.vendor
         context["orders"] = vendor.orders.all()
         return context
+    
+## view orders customer
 class CustomerOrders(TemplateView):
     template_name= 'skeleton/customer_order_list.html'
     
@@ -512,17 +514,6 @@ def deleteOrder(request, pk):
     return render(request, 'skeleton/delete.html')
 
 
-def test(request):
-    channel_layer = get_channel_layer()
-    async_to_sync(channel_layer.group_send)(
-        "notification_broadcast",
-        {
-            'type': 'send_notification',
-            'message': json.dumps("Notification")
-        }
-    )
-    return HttpResponse("Done")
-
 # customer order summary
 class ProductDetailView(DetailView):
     template_name = 'skeleton/order_summary.html'
@@ -538,10 +529,7 @@ class ProductDetailView(DetailView):
         context['product'] = product
         return context
 
-
-
-
-
+### register customers
 def register(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
@@ -556,14 +544,14 @@ def register(request):
     }
     return render(request, 'users/register.html', context)
 
-
+### login action
 def login(request):
     if request.user.is_authenticated:
         return redirect('index')
     
     return render(request, 'users/login.html')
 
-
+## logout action
 def logout(request):
     return render(request, 'users/logout.html')
 
