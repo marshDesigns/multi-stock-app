@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import OrderItem, Product, Order, Message, Vendor ,Customer, RepliedMessage
+from .models import Budget, OrderItem, Product, Order, Message, Vendor ,Customer, RepliedMessage
 
 admin.site.site_header = 'Stock Dashboard'
 
@@ -17,3 +17,4 @@ admin.site.register(Message)
 admin.site.register(Vendor)
 admin.site.register(Customer)
 admin.site.register(RepliedMessage)
+admin.site.register(Budget)

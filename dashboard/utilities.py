@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
-from .models import Message, Order, OrderItem, RepliedMessage
+from .models import Budget, Message, Order, OrderItem, RepliedMessage
 
 def checkout(request, user, first_name, last_name, email, phone,  address, amount):
     order = Order.objects.create(user=user, first_name=first_name, last_name=last_name, email=email, phone=phone, address=address, paid_amount=amount)
@@ -52,3 +52,7 @@ def saved_message(user, email_to, phone_number, message):
 def replied_message(user, email, subject, message):
     replied_msg = RepliedMessage.objects.create(user=user, email=email, subject=subject,message=message)  
     return replied_msg
+
+def budget_saved(user, currency, amount):
+    bgt = Budget.objects.create(user=user, currency=currency, amount=amount)  
+    return bgt

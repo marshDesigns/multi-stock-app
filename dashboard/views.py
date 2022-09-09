@@ -8,7 +8,7 @@ from django.shortcuts import render, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from dashboard.utilities import checkout, notify_customer, notify_vendor, replied_message, saved_message
+from dashboard.utilities import budget_saved, checkout, notify_customer, notify_vendor, replied_message, saved_message
 
 from .models import *
 from .forms import AddToCartForm, ProductForm, SupplierForm
@@ -24,6 +24,7 @@ from django.utils.text import slugify
 from django.template.loader import get_template
 from .pdf import render_to_pdf
 from datetime import datetime
+from django.db.models import Sum
 
 
 # Create your views here.
@@ -238,7 +239,7 @@ def replyMessages(request, key):
         replied.subject = request.POST.get('subject')
         replied.message = request.POST.get('message')
         replied_message(replied.user, replied.email, replied.subject, replied.message)
-        return redirect(request, 'messages')
+        return redirect('messages')
 
     context = {
         'reply': Message.objects.get(id=key), }
@@ -306,6 +307,34 @@ def supplier_Inventory(request):
    
     }
     return render(request, 'skeleton/account.html', context)
+
+
+## customer inventory page
+@login_required(login_url='login')
+def customerInventory(request):
+    
+    get_budget = Budget.objects.filter(user=request.user.customer).aggregate(Sum('amount'))['amount__sum'] or 0
+    get_expenses = Order.objects.filter(user=request.user.customer).aggregate(Sum('paid_amount'))['paid_amount__sum']
+    
+    
+    calculate_expenses = get_budget - get_expenses
+    
+    if request.method == 'POST':
+        budget = Budget()
+        budget.user = request.user.customer
+        budget.currency = request.POST.get('currency')
+        budget.amount = request.POST.get('amount')
+        budget_saved(budget.user, budget.currency, budget.amount)
+        return redirect('inventory-account')
+    
+    context = {
+        'calculate_expenses': calculate_expenses,
+        'get_budget':get_budget,
+        'get_expenses':get_expenses,
+    }
+    
+    return render(request, 'skeleton/customer_inventory.html', context)
+
 
 
 ## add supplier

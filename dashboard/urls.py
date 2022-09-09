@@ -20,6 +20,7 @@ urlpatterns = [
     path('index/', views.index, name='index'),##check
     path('login_success', views.login_success, name='login_success'),##check
     path('account/', views.supplier_Inventory, name= 'account'),##check
+     path('inventory-account/', views.customerInventory, name='inventory-account'),##check
     path('products/', views.products , name= 'products'),##check
     path('sup-products/<int:key>/',views.viewVendorProducts, name='sup-products'),
     path('s_order_detail/<int:pk>/',SupplierOrderDetails.as_view(), name='s_order_detail'),
