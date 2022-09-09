@@ -314,7 +314,7 @@ def supplier_Inventory(request):
 def customerInventory(request):
     
     get_budget = Budget.objects.filter(user=request.user.customer).aggregate(Sum('amount'))['amount__sum'] or 0
-    get_expenses = Order.objects.filter(user=request.user.customer).aggregate(Sum('paid_amount'))['paid_amount__sum']
+    get_expenses = Order.objects.filter(user=request.user.customer).aggregate(Sum('paid_amount'))['paid_amount__sum'] or 0
     
     
     calculate_expenses = get_budget - get_expenses
