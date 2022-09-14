@@ -120,7 +120,7 @@ class PrintPdfUsers(View):
             return response
         return HttpResponse('Error')
     
-    
+#from django.http import HttpResponseRedirect
 def viewProduct(request, product_slug):
     # Create instance of Cart class
     cart = Cart(request)
@@ -133,7 +133,7 @@ def viewProduct(request, product_slug):
             cart.add(product_id=product.id, quantity=quantity, update_quantity=True)
 
             messages.success(request, "The product was added to the cart.")
-            return redirect('view-product',  product_slug=product_slug)            
+            return HttpResponse('<script>history.go(-2);</script>')            
     
     else:
         form = AddToCartForm()

@@ -40,6 +40,9 @@
       {% if user.vendor %}
       {% include 'body/navbar.html' %}
       {% endif %}
+      {% if user.customer %}
+      {% include 'body/cus_dash.html' %}
+      {% endif %}
       <div id='content-wrapper' class='d-flex flex-column'>
         <div id='content'>
           {% include 'body/header.html' %}

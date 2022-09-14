@@ -132,13 +132,6 @@
         <!-- Modal -->
 
         {% if request.user.customer %}
-        <li class="nav-item no-arrow">
-            <a class="nav-link text-white" href="{% url 'customer-orders' %}" role="button" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-list-alt fa-fw"></i>
-                <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter" id='notification-badge'></span>
-            </a>
-        </li>
         <!-- Nav Item - User Information -->
         <li class="nav-item no-arrow">
             <a class="nav-link text-white" href="{% url 'my_cart' %}" role="button" aria-haspopup="true" aria-expanded="false">
@@ -147,21 +140,6 @@
                 <span class="badge badge-danger badge-counter" id='notification-badge'>{% if cart %}{{cart|length}}{% endif %}</span>
             </a>
         </li>
-        <li class="nav-item no-arrow">
-            <a class="nav-link text-white" href="{% url 'inventory-account' %}" role="button" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-money-bill"></i>
-                <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter" id='notification-badge'></span>
-            </a>
-        </li>
-        <li class="nav-item no-arrow">
-            <a class="nav-link text-white" href="{% url 'my-messages' %}" role="button" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-comments fa-fw"></i>
-                <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter" id='notification-badge'></span>
-            </a>
-        </li>
-
         <div class="topbar-divider d-none d-sm-block"></div>
         
         <!-- Nav Item - User Information -->
