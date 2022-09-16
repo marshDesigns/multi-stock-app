@@ -47,6 +47,7 @@ class ProductForm(forms.ModelForm):
             'quantity',
             'price',
             'expiry_date',
+            'batch_number',
             'description',  
             ]
         

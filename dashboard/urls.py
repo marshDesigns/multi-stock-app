@@ -12,6 +12,7 @@ from .views import (
     CustomerOrders,
     CustomerOrderDetails,
     PrintPdfUsers,
+    PrintDetails,
     
 )
 
@@ -24,6 +25,7 @@ urlpatterns = [
     path('products/', views.products , name= 'products'),##check
     path('sup-products/<int:key>/',views.viewVendorProducts, name='sup-products'),
     path('s_order_detail/<int:pk>/',SupplierOrderDetails.as_view(), name='s_order_detail'),
+    path('print-details/<int:pk>/',PrintDetails.as_view(), name='print-details'),
     path('add_products/', views.addProducts , name= 'add_products'),##check
     path('messages/', views.viewMessages , name= 'messages'),##check
     path('reply_msg/<int:key>/', views.replyMessages , name= 'reply_msg'),##check

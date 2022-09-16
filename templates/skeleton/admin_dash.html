@@ -35,6 +35,7 @@
                         <td>{{order.created_at|timesince }}</td>
                         <td>
                             <a class="btn btn-danger btn-sm" href="{% url 'delete-order' order.id %}">Delete</a>
+                            
                         </td>
                     </tr>
             {% endfor %}

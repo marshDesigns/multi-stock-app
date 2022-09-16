@@ -94,6 +94,32 @@ class GeneratePdfCustomer(View):
             response['Content-Disposition'] = content        
             return response
         return HttpResponse('Error')
+  
+class PrintDetails(DetailView):
+    def get(self, request,*args, **kwargs):
+        template = get_template('skeleton/print_details.html')
+        vendor = request.user.vendor
+        details = Order.objects.all()
+        my_date = datetime.now()
+        formatted_date = my_date.strftime("%Y-%m-%d %H:%M:%S")
+        
+        context= {
+            'details':details,
+            'my_date':formatted_date,
+        }
+        
+        html = template.render(context)
+        pdf = render_to_pdf('skeleton/print_details.html', context)
+        if pdf:
+            response =  HttpResponse(pdf, content_type='application/pdf')
+            filename = "Invoice_details_%s.pdf" %("124567772")
+            content = "inline; filename='%s'"%(filename)
+            download = request.GET.get('download')
+            if download:
+                content ="attachment; filename='%s'"%(filename)  
+            response['Content-Disposition'] = content        
+            return response
+        return HttpResponse('Error')
     
 class PrintPdfUsers(View):   
     def get(self, request,*args, **kwargs):
@@ -452,11 +478,6 @@ class SupplierOrderDetails(DetailView):
     template_name= 'skeleton/supplier_order_detail.html'
     model = Order
     context_object_name = 'details'
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["status"] = ORDER_STATUS
-        return context
     
 class CustomerOrderDetails(DetailView):
     template_name= 'skeleton/customer_order_detail.html'
