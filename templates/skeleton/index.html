@@ -154,34 +154,39 @@
   <div></div>
   {% endif %}
   {% if request.user.vendor and user.is_authenticated %}
-  <div class="" style="margin-top: 30px">
-      <div class='row'>
-        <!-- Total Products -->
-   
-    <!-- Total Orders -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-primary shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div
-                class="text-xs font-weight-bold text-primary text-uppercase mb-1"
-              >
-              Total  Messages
-              </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">
-                {{ total_messages }}
-              </div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-envelope fa-2x text-gray-300"></i>
-            </div>
+      <div class="card shadow mb-4" style='margin-top:30px;'>
+          <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Available Messages</h6>
           </div>
-        </div>
+          <div class="card-body">
+              <div class="table-responsive">
+                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                      <thead class='bg-info'>
+                          <tr class="text-white">
+                              <th scope="col">#</th>
+                              <th scope="col">Send By</th>
+                              <th scope="col">Email</th>
+                              <th scope="col">Date Received</th>
+                              <th scope="col">Action</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for view_msg  in view_msg  %}
+                          <tr>
+                              <td>{{forloop.counter}}</td>
+                              <td>{{ view_msg.user.first_name }} {{ view_msg.user.last_name}}</td>
+                              <td>{{ view_msg.user.email }}</td>
+                              <td>{{ view_msg.date_sent }}</td>
+                              <td>
+                                  <a class="btn btn-info btn-sm" href="{% url 'reply_msg' view_msg.id %}">View</a>
+                              </td>
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+              </div>   
+          </div>
       </div>
-    </div>
-
-    </div>
     </div>
   
   {% endif %}

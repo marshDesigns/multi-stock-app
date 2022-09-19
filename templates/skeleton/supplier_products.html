@@ -31,6 +31,7 @@
                   <tr class="text-white">
                       <th scope="col">#</th>
                       <th scope="col">Product</th>
+                      <th scope="col">Batch Number</th>
                       <th scope="col">Category</th>
                       <th scope="col">Pack Size(grams)</th>
                       <th scope="col">Price(Each)</th>
@@ -44,6 +45,7 @@
                   <tr>
                     <td>{{forloop.counter}}</td>
                       <td>{{product.title }}</td>
+                      <td>{{product.batch_number }}</td>
                       <td>{{product.category }}</td>
                       <td>{{product.pack_size }}</td>
                       <td>$ {{product.price }}</td>

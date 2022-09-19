@@ -224,6 +224,7 @@ def index(request):
         'form': form,
         'total_products':total_products,
         'total_orders': total_orders,
+        'view_msg':Message.objects.filter(email_to = request.user.email),
       
     }
     return render(request, 'skeleton/index.html', context)

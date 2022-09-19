@@ -45,7 +45,6 @@
                 <h6 class="collapse-header">Extras:</h6>
                 <a class="collapse-item" href="{% url 'update-supplier-acc' %}">Update Account</a>
                 <a class="collapse-item" href="{% url 'account' %}">Information</a>
-                <a class="collapse-item" href="{% url 'messages' %}">Messages</a>
                 {% else %}
                 {% if user.is_superuser %}
                 <h6 class="collapse-header">Users:</h6>
