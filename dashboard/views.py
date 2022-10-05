@@ -562,8 +562,17 @@ def deleteOrder(request, pk):
     if request.method == 'POST':
         order.delete()
         return redirect('admin_dash')
-    return render(request, 'skeleton/delete.html')
+    return render(request, 'skeleton/delete_order.html')
 
+
+# reset budget
+@login_required(login_url='login')
+def resetBudget(request):
+    reset = Budget.objects.filter(user = request.user)
+    if request.method == 'POST':
+        reset.delete()
+        return redirect('inventory-account')
+    return render(request, 'skeleton/reset_budget.html')
 
 # customer order summary
 class ProductDetailView(DetailView):

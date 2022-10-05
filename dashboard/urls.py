@@ -33,6 +33,7 @@ urlpatterns = [
     path('add_users/', views.addUsers , name= 'add_users'),##check
     path('add_supplier/', views.addSupplier , name= 'add_supplier'),##check
     path('delete/<int:key>', views.delete, name= 'delete'),##check
+    path('reset-budget/', views.resetBudget, name= 'reset-budget'),##check
     path('delete-order/<int:pk>/', views.deleteOrder, name='delete-order'),
     path('update/<int:key>', views.update, name='update'),##check
     path('update-user/<int:key>', views.updateUser, name='update-user'),##check

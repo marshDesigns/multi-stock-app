@@ -1,0 +1,26 @@
+{% extends 'body/base.html' %}
+{% block title %}Reset Budget{% endblock %}
+
+
+{% block content %}
+<div class='container'>
+    <div class='row mt-5'>
+        <div class='col-md-6 offset-md-3'>
+            <div class='border bg-white p-3'>
+                <h4>Reset Budget</h4>
+                <hr>
+                <div class='alert alert-danger'>
+                    <h5>Sure to reset?</h5>
+                </div>
+                <form method='POST'>
+                    {% csrf_token %}
+                    {{ form }}
+                    <input class='btn btn-danger' type='submit' value='Reset' />
+                </form>
+            </div>
+          
+        </div>
+    </div>
+</div>
+
+{% endblock %}

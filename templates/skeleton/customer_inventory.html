@@ -40,7 +40,7 @@
                 <div
                   class="text-xs font-weight-bold text-primary text-uppercase mb-1"
                 >
-                  Total Budget
+                  Weekly Budget
                 </div>
                 <div class="h5 mb-0 font-weight-bold text-gray-800">
               
@@ -131,7 +131,7 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a class="btn btn-danger" href="{% url 'reset-budget' %}">Reset</a>
           <button class="btn btn-success">Submit</button>
         </div>
         </form>
