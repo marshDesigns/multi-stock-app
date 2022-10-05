@@ -77,7 +77,7 @@
                     <form action="{% url 'change_status' details.id %}" method='POST'>
                         {% csrf_token %}
                         <select name='status' class='edit3'>
-                            {% for i, j in status  %}
+                            {% for i, j in status  %} 
                             <option value="{{i}}" {% if i == details.order_status %}selected{% endif %}>{{j}}</option>
                             {% endfor %}
                         </select>

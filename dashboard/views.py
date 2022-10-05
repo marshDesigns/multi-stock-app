@@ -480,6 +480,11 @@ class SupplierOrderDetails(DetailView):
     model = Order
     context_object_name = 'details'
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["status"] = ORDER_STATUS
+        return context
+    
 class CustomerOrderDetails(DetailView):
     template_name= 'skeleton/customer_order_detail.html'
     model = Order
